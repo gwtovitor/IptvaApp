@@ -44,6 +44,7 @@ async componentDidMount(){
           data={this.state.filmes}
           key={item => item.id}
           estimatedItemSize={10000}
+          numColumns={4}
           renderItem={({item})=> <Filme data={item}/>}/>
         
 
