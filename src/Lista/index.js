@@ -1,14 +1,20 @@
 import React, {Component} from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet} from 'react-native'
 
-class ListaFilmes extends Component{
+class Filme extends Component{
     render(){
         return(
             <View>
-                <Text>OLA OLA OLA</Text>
+                <Text styles={styles.container}>{this.props.data.id}</Text>
             </View>
 
         )
     }
 }
-export default ListaFilmes
+
+const styles = StyleSheet.create({
+    container:{
+     color: '#fff'
+    },
+  });
+export default Filme
