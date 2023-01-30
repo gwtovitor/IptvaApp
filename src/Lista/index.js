@@ -1,11 +1,27 @@
 import React, {Component} from 'react'
-import { View, Text, StyleSheet} from 'react-native'
+import { Text, View, Image, StyleSheet, TouchableOpacity,StatusBar} from 'react-native'
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import * as ScreenOrientation from 'expo-screen-orientation';
+
+async function changeScreenOrientation() {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+   
+  }
+  changeScreenOrientation()
+
+
 
 class Filme extends Component{
     render(){
         return(
-            <View>
-                <Text styles={styles.container}>{this.props.data.id}</Text>
+            <View style={styles.container}>
+                <StatusBar hidden={true}/>
+                <View  style={styles.quadrado}>
+                    <TouchableOpacity>
+                        <Image style={styles.imagem} source={{uri: this.props.data.logo}}></Image>
+                        <Text style={styles.texto}>{this.props.data.dataName}</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
 
         )
@@ -13,8 +29,29 @@ class Filme extends Component{
 }
 
 const styles = StyleSheet.create({
-    container:{
-     color: '#fff'
+    container:{ 
+        flex: 1,
+        backgroundColor: "#000",
+        display: 'flex',
+     
+        },
+    quadrado:{
+        width: 200,
+        height: 200,
+        borderColor: '#fff',
+        borderRadius: 10,
+        borderWidth: 2,
+        alignItems: 'center'   
+    },
+    imagem:{
+        width: 100,
+        height: 100,
+    },
+    texto:{
+        color: "#fff",
+        backgroundColor: '#23f',
+        marginTop: 30,       
+        
     },
   });
 export default Filme

@@ -3,6 +3,7 @@ import {View, ActivityIndicator, StyleSheet, StatusBar, FlatList} from 'react-na
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import Filme from '../src/Lista';
+import { FlashList } from "@shopify/flash-list";
 
 
 async function changeScreenOrientation() {
@@ -33,12 +34,19 @@ async componentDidMount(){
   render(){
 
     return (
+      
+      <View style={{flex: 1}}>
+        <StatusBar hidden={true}/>
 
-      <View style={{flex: 1, padding: 24, backgroundColor: 'black'}}>
-        <FlatList
-        data={this.state.filmes}
-        key={item => item.link}
-        renderItem={({item})=> <Filme data={item}/>}></FlatList>
+
+
+        <FlashList
+          data={this.state.filmes}
+          key={item => item.id}
+          estimatedItemSize={10000}
+          renderItem={({item})=> <Filme data={item}/>}/>
+        
+
       </View>
     );}}
 export default Homepage
