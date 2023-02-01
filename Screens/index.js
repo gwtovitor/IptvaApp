@@ -16,7 +16,7 @@ class Filme extends React.Component{
         this.state = {
             visivel: false
            };
-       
+
 }
 
 
@@ -29,8 +29,8 @@ class Filme extends React.Component{
                 <View  style={styles.quadrado}>
                     
                     <TouchableOpacity>
-                        <Image style={styles.imagem} source={{uri: this.props.data.logo}}></Image>
-                        <Text style={styles.texto}>{this.props.data.dataName}</Text>
+                        <Image style={styles.imagem} source={{uri: this.props.data.id}}></Image>
+                        <Text style={styles.texto}>{this.props.data.dataName} </Text>
                     </TouchableOpacity>
                 </View>
             </View>

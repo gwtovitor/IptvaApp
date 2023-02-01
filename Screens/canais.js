@@ -12,31 +12,7 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-class Homepage extends Component{
-  
-  constructor(props){
-    super(props);
-    this.state = {
-      
-        canais: [],
-        canaisglobo: [],
-        canaisbbb: [],
-       };
-       this.navigation = this.props.navigation;
-       
-  }
-async componentDidMount(){
-  const reponse = await api.get('/channel')
-  this.setState({
-    canais: reponse.data,
-    canaisglobo: reponse.data[0].resultList,
-    canaisbbb: reponse.data[1].resultList,
-  })
-  this.navigation = this.props.navigation;
-}
-
-  render(){
-
+const Canais = ({route, navigation, navigate}) =>{
     return (
       
       <View style={{flex: 1}}>
@@ -44,7 +20,7 @@ async componentDidMount(){
 
       
         <FlashList
-          data={this.state.canais}
+          data={route.params.paramKey}
           key={item => item.id}
           estimatedItemSize={10000}
           numColumns={4}
@@ -52,18 +28,18 @@ async componentDidMount(){
           <TouchableHighlight
           underlayColor={'#000'}
           activeOpacity={0.6}
-          onPress={() => this.navigation.navigate('Canais', {paramKey: this.state.canais[index].resultList})}>
+          onPress={() => navigation.navigate('Videoplayer', {paramKey: item.link})}>
           <View style={styles.quadrado}>
-            <Text style={styles.texto}>{item.category}</Text>
+            <Text style={styles.texto}>{item.dataName}</Text>
             <Image style={styles.imagem} source={{uri: item.logo}}></Image>
 
           </View>
         </TouchableHighlight>}/>
       </View>
   
-    );}}
+    );}
     
-export default Homepage
+export default Canais
 
 const styles = StyleSheet.create({
   container:{ 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { useRoute } from '@react-navigation/native';
 
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -10,26 +11,12 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-class Videoapp extends Component{
+const Videoplayer = ({route}) =>{
   
-    constructor(props){
-      super(props);
-      this.state = {
-          login: '',
-          senha: ''
-         };
-     
-    }
-  
-  
-    render(){
- 
-
-      return(
-          <View style={styles.container}>
+          return(<View style={styles.container}>
                <StatusBar hidden={true}/>
             <Video
-            source={{ uri:'http://hdmais.com:80/d623481/76268116/10054681'}}
+            source={{ uri: route.params.paramKey}}
             rate={1.0}
             volume={1.0}
             loadAsync
@@ -41,7 +28,7 @@ class Videoapp extends Component{
           </View>
       );
     }
-  }
+export default Videoplayer
   
   const styles = StyleSheet.create({
     container:{
@@ -49,6 +36,4 @@ class Videoapp extends Component{
         backgroundColor: '#000'
     },
 
-  });
-  export default Videoapp
-  
+  })  
