@@ -23,6 +23,7 @@ const Videoplayer = ({route}) =>{
             shouldPlay
             resizeMode='contain'
             useNativeControls
+            minLoadRetryCount={5}
             style={{ flex: 1,}}/>
                   
           </View>

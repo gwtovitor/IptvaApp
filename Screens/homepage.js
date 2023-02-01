@@ -1,94 +1,73 @@
-import React, { Component} from 'react';
-import {View, StyleSheet, StatusBar, TouchableHighlight, Text, Image} from 'react-native';
+import React, { Component, useState } from 'react';
+import {View, TextInput, Text, StyleSheet, Modal, StatusBar, Button, TouchableOpacity} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import api from '../src/services/getapi';
-import { FlashList } from "@shopify/flash-list";
-import Filme from '.';
+import { useNavigation } from '@react-navigation/native';
 
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
  
 }
+
+
 changeScreenOrientation()
 
 
-class Homepage extends Component{
-  
-  constructor(props){
-    super(props);
-    this.state = {
+const Homepage = ({route, navigate, navigation}) =>{
+    return(
       
-        canais: [],
-        canaisglobo: [],
-        canaisbbb: [],
-       };
-       this.navigation = this.props.navigation;
-       
+        <View style={styles.container}>
+            
+            <StatusBar hidden={true}/>
+            <TouchableOpacity onPress={()=>{navigation.navigate('HomepageChannels')}} style={styles.botaoarea}>
+              <Text style={styles.botaoentrar}>Canais</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Homepage')}} style={styles.botaoarea}>
+              <Text style={styles.botaoentrar}>Filmes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Homepage')}} style={styles.botaoarea}>
+              <Text style={styles.botaoentrar}>Series</Text>
+            </TouchableOpacity>
+
+        </View>
+    );
   }
-async componentDidMount(){
-  const reponse = await api.get('/channel')
-  this.setState({
-    canais: reponse.data,
-    canaisglobo: reponse.data[0].resultList,
-    canaisbbb: reponse.data[1].resultList,
-  })
-  this.navigation = this.props.navigation;
-}
-
-  render(){
-
-    return (
-      
-      <View style={{flex: 1}}>
-        <StatusBar hidden={true}/>
-
-      
-        <FlashList
-          data={this.state.canais}
-          key={item => item.id}
-          estimatedItemSize={10000}
-          numColumns={4}
-          renderItem={({item, index, separators})=> 
-          <TouchableHighlight
-          underlayColor={'#000'}
-          activeOpacity={0.6}
-          onPress={() => this.navigation.navigate('Canais', {paramKey: this.state.canais[index].resultList})}>
-          <View style={styles.quadrado}>
-            <Text style={styles.texto}>{item.category}</Text>
-            <Image style={styles.imagem} source={{uri: item.logo}}></Image>
-
-          </View>
-        </TouchableHighlight>}/>
-      </View>
-  
-    );}}
-    
-export default Homepage
 
 const styles = StyleSheet.create({
-  container:{ 
-      flex: 1,
-      backgroundColor: "#000",
-      display: 'flex'
-   
-      },
-  quadrado:{
-      width: 200,
-      height: 200,
-      borderColor: '#fff',
-      borderRadius: 10,
-      borderWidth: 2,
-      alignItems: 'center'   
+  container:{
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#000',
+    display: 'flex'
   },
-  imagem:{
-      width: 100,
-      height: 100,
-      
-    },
-  texto:{
-      color: "#fff",
-      backgroundColor: '#23f',
-      marginTop: 30,       
-      
+
+  inputs:{
+    borderColor: 'black',
+    width: 300,
+    height: 40, 
+    margin: 5,
+    borderWidth: 2,
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    borderRadius: 10,
+  },
+  textologin:{
+    fontSize: 20,
+    color: 'red',
+    fontSize: 30,
+    paddingBottom: 20,
+    fontWeight: 'bold',
+
+  },
+ 
+  botaoarea:{
+    width: 200,
+    height: 40,
+    backgroundColor: 'yellow',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    margin: 15,
   },
 });
+export default Homepage
