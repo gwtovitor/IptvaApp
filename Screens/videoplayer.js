@@ -29,7 +29,7 @@ class Videoapp extends Component{
           <View style={styles.container}>
                <StatusBar hidden={true}/>
             <Video
-            source={{ uri: 'http://hdmais.com:80/d623481/76268116/6287' }}
+            source={{ uri:'http://hdmais.com:80/d623481/76268116/10054681'}}
             rate={1.0}
             volume={1.0}
             loadAsync

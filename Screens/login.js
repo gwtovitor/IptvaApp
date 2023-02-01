@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import {View, TextInput, Text, StyleSheet, Modal, StatusBar, Button, TouchableOpacity} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { useNavigation } from '@react-navigation/native';
 
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -12,21 +13,21 @@ changeScreenOrientation()
 
 
 class Login extends Component{
-  
+
   constructor(props){
     super(props);
     this.state = {
         login: '',
         senha: ''
        };
-   
-  }
-
-
+       this.navigation = this.props.navigation;
+ }
+ 
   render(){
     return(
+      
         <View style={styles.container}>
-          
+            
             <StatusBar hidden={true}/>
             <Text style={styles.textologin}> Projeto Manchete </Text>
             <TextInput underlineColorAndroid = "transparent" 
@@ -39,7 +40,7 @@ class Login extends Component{
             secureTextEntry={true}
             style={styles.inputs}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
-            <TouchableOpacity style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{this.navigation.navigate('Homepage')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>ENTRAR</Text>
             </TouchableOpacity>
 

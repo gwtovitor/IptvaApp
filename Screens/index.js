@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
-import { Text, View, Image, StyleSheet, TouchableOpacity,StatusBar} from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Text, View, Image, StyleSheet, TouchableOpacity,StatusBar, Video} from 'react-native'
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+
 
 async function changeScreenOrientation() {
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -12,14 +10,25 @@ async function changeScreenOrientation() {
   changeScreenOrientation()
 
 
+class Filme extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            visivel: false
+           };
+       
+}
 
-class Filme extends Component{
+
+
     render(){
         return(
             <View style={styles.container}>
+        
                 <StatusBar hidden={true}/>
                 <View  style={styles.quadrado}>
-                    <TouchableOpacity onPress={navigation.navigator}>
+                    
+                    <TouchableOpacity>
                         <Image style={styles.imagem} source={{uri: this.props.data.logo}}></Image>
                         <Text style={styles.texto}>{this.props.data.dataName}</Text>
                     </TouchableOpacity>
@@ -35,6 +44,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#000",
         display: 'flex',
+        zIndex: 9000,
      
         },
     quadrado:{
