@@ -12,19 +12,19 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-const Homepage = ({route, navigate, navigation}) =>{
+const Homepage = ({navigation}) =>{
     return(
       
         <View style={styles.container}>
             
             <StatusBar hidden={true}/>
-            <TouchableOpacity onPress={()=>{navigation.navigate('HomepageChannels')}} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('PageChannels')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>Canais</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate('Homepage')}} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('PageMovies')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>Filmes</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate('Homepage')}} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('PageSeries')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>Series</Text>
             </TouchableOpacity>
 

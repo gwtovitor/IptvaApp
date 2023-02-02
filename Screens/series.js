@@ -1,8 +1,8 @@
 import React, { Component} from 'react';
-import {View, StyleSheet, StatusBar, Text, Image} from 'react-native';
+import {View, StyleSheet, StatusBar, TouchableHighlight, Text, Image} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { FlashList } from "@shopify/flash-list";
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -11,7 +11,7 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-const Canais = ({route, navigation}) =>{
+const Series = ({route, navigation}) =>{
     return (
       
       <View style={{flex: 1}}>
@@ -24,42 +24,41 @@ const Canais = ({route, navigation}) =>{
           estimatedItemSize={10000}
           numColumns={4}
           renderItem={({item})=> 
-          <TouchableOpacity
+          <TouchableHighlight
+          underlayColor={'#000'}
+          activeOpacity={0.6}
           onPress={() => navigation.navigate('Videoplayer', {paramKey: item.link})}>
           <View style={styles.quadrado}>
-            <Image style={styles.imagem} source={{uri: item.logo}}></Image>
             <Text style={styles.texto}>{item.dataName}</Text>
+            <Image style={styles.imagem} source={{uri: item.logo}}></Image>
+
           </View>
-        </TouchableOpacity>}/>
+        </TouchableHighlight>}/>
       </View>
   
     );}
     
-export default Canais
+export default Series
 
 const styles = StyleSheet.create({
   container:{ 
       flex: 1,
       backgroundColor: "#000",
-      justifyContent: 'center',
-      alignItems: 'center',
+      display: 'flex'
    
       },
   quadrado:{
       width: 200,
       height: 200,
+      borderColor: '#fff',
       borderRadius: 10,
       borderWidth: 2,
-      alignItems: 'center',
-      backgroundColor: '#000',
-      justifyContent: 'center',
-
+      alignItems: 'center'   
   },
   imagem:{
       width: 100,
       height: 100,
-      marginTop: 10,
-      resizeMode: "contain",
+      
     },
   texto:{
       color: "#fff",

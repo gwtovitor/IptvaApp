@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "iptv-app",
-    "slug": "iptv-app",
+    "name": "Projeto-Manchete",
+    "slug": "Projeto-Manchete",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.gwtovitor.ProjetoManchete"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "00b15b33-91c1-4fea-b667-f7ea2de54696"
+      }
     }
   }
 }

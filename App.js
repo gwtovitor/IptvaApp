@@ -3,11 +3,14 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from './Screens/login';
-import HomepageChannels from './Screens/homepagechannels';
+import PageChannels from './Screens/pagechannels';
 import Videoplayer from './Screens/videoplayer';
-import Filme from './Screens/homepagechannels';
 import Canais from './Screens/canais';
 import Homepage from './Screens/homepage';
+import PageMovies from './Screens/pagemovies';
+import Movies from './Screens/movies';
+import PageSeries from './Screens/pageseries';
+import Series from './Screens/series';
 
 
 
@@ -25,11 +28,14 @@ function MyStack() {
       headerShown: false
     }} >
       <Stack.Screen name="Login" component={Login}/>
-      <Stack.Screen name="HomepageChannels" component={HomepageChannels}/>
+      <Stack.Screen name="PageChannels" component={PageChannels}/>
       <Stack.Screen name="Videoplayer" component={Videoplayer}/>
-      <Stack.Screen name="Menu" component={Filme}/>
       <Stack.Screen name="Canais" component={Canais}/>
       <Stack.Screen name="Homepage" component={Homepage}/>
+      <Stack.Screen name="PageMovies" component={PageMovies}/>
+      <Stack.Screen name="Filmes" component={Movies}/>
+      <Stack.Screen name="PageSeries" component={PageSeries}/>
+      <Stack.Screen name="Series" component={Series}/>
     </Stack.Navigator>
   );
 }

@@ -13,7 +13,7 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-class HomepageChannels extends Component{
+class PageChannels extends Component{
   
   constructor(props){
     super(props);
@@ -82,7 +82,7 @@ search(){
   
     );}}
     
-export default HomepageChannels
+export default PageChannels
 
 const styles = StyleSheet.create({
   container:{ 
