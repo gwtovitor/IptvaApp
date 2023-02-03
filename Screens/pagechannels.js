@@ -26,6 +26,7 @@ class PageChannels extends Component{
        };
        this.navigation = this.props.navigation;
        this.search = this.search.bind(this)  
+  
   }
 async componentDidMount(){
   const reponse = await api.get('/channel')
@@ -33,16 +34,23 @@ async componentDidMount(){
     canais: reponse.data,
     canaisglobo: reponse.data[0].resultList,
     canaisbbb: reponse.data[1].resultList,
+   
   })
 }
+
+
 search(){
   if(this.state.searchbar === ''){
     return this.state.canais
   }else{
-    
+     const filtrado = this.state.canais.filter((channels)=>{
+      return channels.category.toLowerCase().indexOf(this.state.searchbar.toLowerCase()) !== -1
+     })
+     return filtrado
   }
-
 }
+
+
 
   render(){
 
@@ -50,8 +58,7 @@ search(){
       
       <View style={{flex: 1, backgroundColor:'#000'}}>
         <View style={styles.textcontainer}>
-          <TextInput style={styles.input} placeholderTextColor="#000" onChangeText={(t)=> this.setState({searchbar : t})}  placeholder="Pesquisa"></TextInput>
-          <Text style={{color:'#fff', fontSize: 20,}}>{this.state.searchbar}</Text>
+          <TextInput style={styles.input} placeholderTextColor="#000" onChangeText={(text)=> this.setState({searchbar : text})}  placeholder="Pesquisa"></TextInput>
         </View>  
         <StatusBar hidden={true}/>
 
@@ -95,6 +102,7 @@ const styles = StyleSheet.create({
       borderRadius:10,
       textAlign: 'center',
       fontSize: 18,
+      marginBottom: 10,
     },
     textcontainer:{
       marginTop: 20,

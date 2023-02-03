@@ -39,9 +39,11 @@ search(){
   if(this.state.searchbar === ''){
     return this.state.canais
   }else{
-    
+     const filtrado = this.state.canais.filter((channels)=>{
+      return channels.category.toLowerCase().indexOf(this.state.searchbar.toLowerCase()) !== -1
+     })
+     return filtrado
   }
-
 }
 
   render(){
@@ -51,7 +53,6 @@ search(){
       <View style={{flex: 1, backgroundColor:'#000'}}>
         <View style={styles.textcontainer}>
           <TextInput style={styles.input} placeholderTextColor="#000" onChangeText={(t)=> this.setState({searchbar : t})}  placeholder="Pesquisa"></TextInput>
-          <Text style={{color:'#fff', fontSize: 20,}}>{this.state.searchbar}</Text>
         </View>  
         <StatusBar hidden={true}/>
 
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
       borderRadius:10,
       textAlign: 'center',
       fontSize: 18,
+      marginBottom: 10,
     },
     textcontainer:{
       marginTop: 20,
