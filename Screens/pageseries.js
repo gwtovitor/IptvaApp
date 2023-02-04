@@ -37,7 +37,13 @@ async componentDidMount(){
 }
 search(){
   if(this.state.searchbar === ''){
-    return this.state.canais
+    return this.state.canais.sort(function(a,b){
+      if(a.category > b.category){
+        return true
+      }else{
+        return false
+      }
+    })
   }else{
      const filtrado = this.state.canais.filter((channels)=>{
       return channels.category.toLowerCase().indexOf(this.state.searchbar.toLowerCase()) !== -1

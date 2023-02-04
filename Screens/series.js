@@ -12,14 +12,24 @@ changeScreenOrientation()
 
 
 const Series = ({route, navigation}) =>{
-    return (
+  
+  function organizando(canaisname){
+    return canaisname.sort(function(a,b){
+      if(a.dataName > b.dataName){
+        return true
+      }else{
+        return false
+      }
+    })
+  } 
+  return (
       
       <View style={{flex: 1}}>
         <StatusBar hidden={true}/>
 
       
         <FlashList
-          data={route.params.paramKey}
+          data={organizando(route.params.paramKey)}
           key={item => item.id}
           estimatedItemSize={10000}
           numColumns={4}
