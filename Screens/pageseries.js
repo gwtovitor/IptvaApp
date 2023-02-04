@@ -1,5 +1,5 @@
 import React, { Component, useState} from 'react';
-import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
@@ -20,21 +20,43 @@ class PageSeries extends Component{
     this.state = {
       
         canais: [],
-        canaisglobo: [],
-        canaisbbb: [],
-        searchbar: ''
+        searchbar: '',
+        erromsg: '',
        };
        this.navigation = this.props.navigation;
        this.search = this.search.bind(this)  
+       this.carregando = this.carregando.bind(this)
   }
-async componentDidMount(){
-  const reponse = await api.get('/serie')
-  this.setState({
-    canais: reponse.data,
-    canaisglobo: reponse.data[0].resultList,
-    canaisbbb: reponse.data[1].resultList,
-  })
-}
+
+carregando(){
+    while(this.state.canais == ''){
+      return (<View>
+                  <ActivityIndicator color="#009688" 
+                size="large" 
+                ></ActivityIndicator>
+                <Text style={{color:'red', fontSize: 20,}}>{this.state.erromsg}</Text>
+              </View>
+              )
+    }
+  }
+
+  async componentDidMount(){
+    const response = await api.get('/serie').catch((error)=>{
+      if(error.response){
+        this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
+      }
+      else if(error.request){
+        this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
+      }
+      else{
+        this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
+      }
+    })
+    this.setState({
+      canais: response.data,   
+    })
+  }
+
 search(){
   if(this.state.searchbar === ''){
     return this.state.canais.sort(function(a,b){
@@ -58,7 +80,9 @@ search(){
       
       <View style={{flex: 1, backgroundColor:'#000'}}>
       <View style={styles.textcontainer}>
-        <TextInput style={styles.input} placeholderTextColor="#000" onChangeText={(t)=> this.setState({searchbar : t})}  placeholder="Pesquisa"></TextInput>
+        <TextInput style={styles.input} placeholderTextColor="#000" 
+        onChangeText={(t)=> this.setState({searchbar : t})}  placeholder="Pesquisa"></TextInput>
+        <Text style={{color:'red', fontSize: 20,}}>{this.carregando()}</Text>   
       </View>  
       <StatusBar hidden={true}/>
 

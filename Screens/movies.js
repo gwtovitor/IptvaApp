@@ -12,6 +12,8 @@ changeScreenOrientation()
 
 
 const Movies = ({route, navigation}) =>{
+ 
+ 
   function organizando(canaisname){
     return canaisname.sort(function(a,b){
       if(a.dataName > b.dataName){
@@ -21,6 +23,16 @@ const Movies = ({route, navigation}) =>{
       }
     })
   }  
+
+  function logo(ulrlogo){
+    if(ulrlogo == ''){
+      return require('../src/logo.jpg')
+    } 
+      else{
+        return {uri: ulrlogo}
+      }
+  }
+
   return (
       
       <View style={{flex: 1}}>
@@ -39,7 +51,7 @@ const Movies = ({route, navigation}) =>{
           onPress={() => navigation.navigate('Videoplayer', {paramKey: item.link})}>
           <View style={styles.quadrado}>
             <Text style={styles.texto}>{item.dataName}</Text>
-            <Image style={styles.imagem} source={{uri: item.logo}}></Image>
+            <Image style={styles.imagem} source={logo(item.logo)}></Image>
 
           </View>
         </TouchableHighlight>}/>

@@ -22,6 +22,16 @@ const Series = ({route, navigation}) =>{
       }
     })
   } 
+
+  function logo(ulrlogo){
+    if(ulrlogo == ''){
+      return require('../src/logo.jpg')
+    } 
+      else{
+        return {uri: ulrlogo}
+      }
+  }
+
   return (
       
       <View style={{flex: 1}}>
@@ -40,7 +50,7 @@ const Series = ({route, navigation}) =>{
           onPress={() => navigation.navigate('Videoplayer', {paramKey: item.link})}>
           <View style={styles.quadrado}>
             <Text style={styles.texto}>{item.dataName}</Text>
-            <Image style={styles.imagem} source={{uri: item.logo}}></Image>
+            <Image style={styles.imagem} source={logo(item.logo)}></Image>
 
           </View>
         </TouchableHighlight>}/>

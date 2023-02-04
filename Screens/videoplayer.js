@@ -12,12 +12,15 @@ changeScreenOrientation()
 
 
 const Videoplayer = ({route}) =>{
-  
+
           return(<View style={styles.container}>
                <StatusBar hidden={true}/>
             <Video
             source={{ uri: route.params.paramKey}}
             rate={1.0}
+            onError={(error) => {
+              alert('Não foi possivel conectar com o servidor, favor entrar em contato com o administrador')
+              }} 
             volume={1.0}
             loadAsync
             shouldPlay
