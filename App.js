@@ -11,6 +11,7 @@ import PageMovies from './Screens/pagemovies';
 import Movies from './Screens/movies';
 import PageSeries from './Screens/pageseries';
 import Series from './Screens/series';
+import Teste from './Screens/teste';
 
 
 
@@ -19,7 +20,7 @@ async function changeScreenOrientation() {
  
 }
 changeScreenOrientation()
-
+// <Stack.Screen name="Login" component={Login}/>
 const Stack = createStackNavigator();
 
 function MyStack() {
@@ -27,7 +28,8 @@ function MyStack() {
     <Stack.Navigator screenOptions={{
       headerShown: false
     }} >
-      <Stack.Screen name="Login" component={Login}/>
+      <Stack.Screen name="teste" component={Teste}/>
+     
       <Stack.Screen name="PageChannels" component={PageChannels}/>
       <Stack.Screen name="Videoplayer" component={Videoplayer}/>
       <Stack.Screen name="Canais" component={Canais}/>

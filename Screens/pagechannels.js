@@ -97,7 +97,7 @@ search(){
           numColumns={4}
           backgroundColor='black'
           padding={1}
-          renderItem={({item, index, separators})=> 
+          renderItem={({item, index})=> 
           <View style={styles.container}>
            
             <TouchableOpacity 
