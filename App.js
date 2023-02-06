@@ -8,6 +8,7 @@ import Videoplayer from './Screens/videoplayer';
 import Mainpagechannels from './Screens/Mainpagechannels';
 import Mainpagemovie from './Screens/Mainpagemovies';
 import Mainpageseries from './Screens/Mainpageseries';
+import Series from './Screens/series';
 
 
 async function changeScreenOrientation() {
@@ -28,6 +29,7 @@ function MyStack() {
       <Stack.Screen name="Mainpagechannels" component={Mainpagechannels}/>
       <Stack.Screen name="Mainpagemovie" component={Mainpagemovie}/>
       <Stack.Screen name="Mainpageseries" component={Mainpageseries}/>
+      <Stack.Screen name="Series" component={Series}/>
       <Stack.Screen name="Videoplayer" component={Videoplayer}/>
     </Stack.Navigator>
   );

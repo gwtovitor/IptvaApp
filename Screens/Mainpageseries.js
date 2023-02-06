@@ -24,11 +24,13 @@ class Mainpageseries extends Component{
         erromsg: '',
         canalselect: '',
         indice: '0',
+        envioprops: ''
        };
        this.navigation = this.props.navigation;
        this.carregando = this.carregando.bind(this)
        this.organizando = this.organizando.bind(this)
        this.logo = this.logo.bind(this)
+       this.envioserie = this.envioserie.bind(this)
   
   }
  
@@ -57,7 +59,7 @@ async componentDidMount(){
         })
         this.setState({
           canais: response.data,
-          canalselect: response.data[this.state.indice].resultList
+          canalselect: response.data[this.state.indice].series
         })
  }
  
@@ -92,7 +94,14 @@ logo(ulrlogo){
   }
 async attcanal(index){
     const response = await api.get('/serie')
-    this.setState({canalselect: response.data[index].resultList})
+    this.setState({canalselect: response.data[index].series})
+    
+}
+
+async envioserie(indice1, indice2){
+  const response = await api.get('/serie')
+  this.setState({envioprops: response.data[0].series[0].episodes})
+  this.navigation.navigate('Series', this.state.envioprops)
 }
 
   render(){
@@ -132,13 +141,13 @@ async attcanal(index){
           key={item => item.id}
           estimatedItemSize={5000}
           numColumns={3}
-          renderItem={({item})=> 
+          renderItem={({item, index})=> 
 
             <TouchableOpacity
             style ={styles.botaolatdireito}
-            onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
+            onPress={()=> this.envioserie(this.state.indice, index)}>
             <View style={styles.viewbotaodireito}>
-                <Text style={styles.texto}>{item.dataName}</Text>
+                <Text style={styles.texto}>{item.name}</Text>
                 <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
              
             </View>
