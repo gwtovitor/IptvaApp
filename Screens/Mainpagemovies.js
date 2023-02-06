@@ -13,7 +13,7 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-class Teste extends Component{
+class Mainpagemovie extends Component{
   
   constructor(props){
     super(props);
@@ -32,7 +32,7 @@ class Teste extends Component{
   
   }
  
-  carregando(){
+carregando(){
     while(this.state.canais == ''){
       return (<View>
                   <ActivityIndicator color="#009688" 
@@ -44,7 +44,7 @@ class Teste extends Component{
             }
     }
 async componentDidMount(){
-     const response = await api.get('/channel').catch((error)=>{
+     const response = await api.get('/movie').catch((error)=>{
         if(error.response){
             this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
           }
@@ -63,10 +63,10 @@ async componentDidMount(){
  
  search(){
     if(this.state.searchbar === ''){
-      return this.state.canais
+      return this.state.canalselect
     }else{
-       const filtrado = this.state.canais.filter((channels)=>{
-        return channels.category.toLowerCase().indexOf(this.state.searchbar.toLowerCase()) !== -1
+       const filtrado = this.state.canalselect.filter((channels)=>{
+        return channels.dataName.toLowerCase().indexOf(this.state.searchbar.toLowerCase()) !== -1
        })
        return filtrado
     }
@@ -91,7 +91,7 @@ logo(ulrlogo){
       }
   }
 async attcanal(index){
-    const response = await api.get('/channel')
+    const response = await api.get('/movie')
     this.setState({canalselect: response.data[index].resultList})
 }
 
@@ -103,17 +103,17 @@ async attcanal(index){
         
         <View style={styles.leftview}>
             <FlashList 
-            data={this.search()}
+            data={this.state.canais}
             key={item => item.id}
             estimatedItemSize={10000}
             backgroundColor='black'
             renderItem={({item, index})=> 
-            <View style={styles.container}>
+            <View>
                                 
                 <TouchableOpacity 
                 style={styles.botao}
                 onPress={()=> {this.attcanal(index)}}>
-                <View style={styles.quadrado}>
+                <View style={styles.botaolatesquerdo}>
                     <Text>{item.category}</Text>
                 </View>
                 </TouchableOpacity>
@@ -121,19 +121,25 @@ async attcanal(index){
             />
             </View>
         <View style={styles.rigthview}>
+          <View style={{alignItems: 'center'}}> 
+          
+          <TextInput style={styles.input} placeholderTextColor="#000" 
+            onChangeText={(text)=> this.setState({searchbar : text})}  placeholder="Pesquisa"></TextInput>
+            <Text>{this.carregando()}</Text>
+          </View>
         <FlashList
-          data={this.state.canalselect}
+          data={this.search()}
           key={item => item.id}
           estimatedItemSize={5000}
           numColumns={3}
           renderItem={({item})=> 
 
             <TouchableOpacity
-            style ={styles.quadrado2}
+            style ={styles.botaolatdireito}
             onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
-            <View>
+            <View style={styles.viewbotaodireito}>
                 <Text style={styles.texto}>{item.dataName}</Text>
-                <Image style={styles.imagem} source={{uri:item.logo}}></Image>
+                <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
              
             </View>
           </TouchableOpacity>}/>
@@ -144,33 +150,22 @@ async attcanal(index){
   
     );}}
     
-export default Teste
+export default Mainpagemovie
 
 const styles = StyleSheet.create({
   container:{ 
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#000'
+        backgroundColor: '#000',
+       
       },
     leftview:{
       backgroundColor: '#fff',
       flex: 1,
+      marginBottom: 10,
+      marginTop: 10,
     },
-    
-    rigthview:{
-        backgroundColor: '#000',
-        flex: 3,
-    },
-    quadrado2:{
-        width: 200,
-        height: 150,
-        borderRadius: 10,
-        borderWidth: 3,
-        alignItems: 'center',
-        backgroundColor: '#000',
-        borderColor:'#fff',
-    },
-  quadrado:{
+    botaolatesquerdo:{
       width: 200,
       height: 50,
       borderRadius: 10,
@@ -181,14 +176,46 @@ const styles = StyleSheet.create({
       borderColor: '#fff',
       margin: 3,
   },
+    input:{
+      backgroundColor: '#fff',
+      height: 50,
+      width: 400,
+      borderRadius:10,
+      textAlign: 'center',
+    },
+    rigthview:{
+        backgroundColor: '#000',
+        flex: 3,
+        marginBottom: 10,
+        marginTop: 10,
+    },
+    botaolatdireito:{
+        width: 200,
+        height: 150,
+        borderRadius: 10,
+        borderWidth: 3,
+        justifyContent: 'center',
+        backgroundColor: '#000',
+        borderColor:'#fff',
+
+        margin:3,
+    },
+ 
+  viewbotaodireito:{
+    alignItems: 'center',
+    justifyContent: 'center'
+    
+  },
   imagem:{
-    width: 100,
-    height: 100,
-    resizeMode: "contain",
+    width: 70,
+    height: 70,
+    resizeMode: 'contain',
+
   },
   texto:{
     color:'#fff',
     fontSize: 15,
-    marginTop:20,
+    marginLeft: 5,
+    marginRight: 5,
   },
 });

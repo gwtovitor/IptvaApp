@@ -12,19 +12,19 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-const Homepage = ({navigation}) =>{
+const Choicepage = ({navigation}) =>{
     return(
       
         <View style={styles.container}>
             
             <StatusBar hidden={true}/>
-            <TouchableOpacity onPress={()=>{navigation.navigate('PageChannels')}} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Mainpagechannels')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>Canais</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate('PageMovies')}} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Mainpagemovie')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>Filmes</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate('PageSeries')}} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Mainpageseries')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>Series</Text>
             </TouchableOpacity>
 
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
     margin: 15,
   },
 });
-export default Homepage
+export default Choicepage

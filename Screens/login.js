@@ -40,7 +40,7 @@ class Login extends Component{
             secureTextEntry={true}
             style={styles.inputs}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
-            <TouchableOpacity onPress={()=>{this.navigation.navigate('Homepage')}} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=>{this.navigation.navigate('Choicepage')}} style={styles.botaoarea}>
               <Text style={styles.botaoentrar}>ENTRAR</Text>
             </TouchableOpacity>
 

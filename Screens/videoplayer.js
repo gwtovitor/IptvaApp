@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useRoute } from '@react-navigation/native';
+
 
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -11,7 +11,7 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-const Videoplayer = ({route}) =>{
+const Videoplayer = ({route}) =>{ 
 
           return(<View style={styles.container}>
                <StatusBar hidden={true}/>
@@ -22,11 +22,12 @@ const Videoplayer = ({route}) =>{
               alert('Não foi possivel conectar com o servidor, favor entrar em contato com o administrador')
               }} 
             volume={1.0}
-            loadAsync
-            shouldPlay
             resizeMode='contain'
             useNativeControls
-            minLoadRetryCount={5}
+            minLoadRetryCount={50}
+            progressUpdateIntervalMillis={1000}
+            shouldPlay
+            isLooping={true}
             style={{ flex: 1,}}/>
                   
           </View>

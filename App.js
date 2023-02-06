@@ -3,16 +3,11 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from './Screens/login';
-import PageChannels from './Screens/pagechannels';
+import Choicepage from './Screens/Choicepage';
 import Videoplayer from './Screens/videoplayer';
-import Canais from './Screens/canais';
-import Homepage from './Screens/homepage';
-import PageMovies from './Screens/pagemovies';
-import Movies from './Screens/movies';
-import PageSeries from './Screens/pageseries';
-import Series from './Screens/series';
-import Teste from './Screens/teste';
-
+import Mainpagechannels from './Screens/Mainpagechannels';
+import Mainpagemovie from './Screens/Mainpagemovies';
+import Mainpageseries from './Screens/Mainpageseries';
 
 
 async function changeScreenOrientation() {
@@ -20,7 +15,7 @@ async function changeScreenOrientation() {
  
 }
 changeScreenOrientation()
-// <Stack.Screen name="Login" component={Login}/>
+
 const Stack = createStackNavigator();
 
 function MyStack() {
@@ -28,16 +23,12 @@ function MyStack() {
     <Stack.Navigator screenOptions={{
       headerShown: false
     }} >
-      <Stack.Screen name="teste" component={Teste}/>
-     
-      <Stack.Screen name="PageChannels" component={PageChannels}/>
+      <Stack.Screen name="Login" component={Login}/>
+      <Stack.Screen name="Choicepage" component={Choicepage}/>
+      <Stack.Screen name="Mainpagechannels" component={Mainpagechannels}/>
+      <Stack.Screen name="Mainpagemovie" component={Mainpagemovie}/>
+      <Stack.Screen name="Mainpageseries" component={Mainpageseries}/>
       <Stack.Screen name="Videoplayer" component={Videoplayer}/>
-      <Stack.Screen name="Canais" component={Canais}/>
-      <Stack.Screen name="Homepage" component={Homepage}/>
-      <Stack.Screen name="PageMovies" component={PageMovies}/>
-      <Stack.Screen name="Filmes" component={Movies}/>
-      <Stack.Screen name="PageSeries" component={PageSeries}/>
-      <Stack.Screen name="Series" component={Series}/>
     </Stack.Navigator>
   );
 }
