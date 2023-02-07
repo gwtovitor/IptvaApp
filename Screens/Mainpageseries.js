@@ -99,9 +99,11 @@ async attcanal(index){
 }
 
 async envioserie(indice1, indice2){
-  const response = await api.get('/serie')
-  this.setState({envioprops: response.data[indice1].series[indice2]})
-  return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
+ // const response = await api.get('/serie')
+  //this.setState({envioprops: response.data[indice1].series[indice2]})
+  const oi = 'oi'
+  const ola = 'ola'
+  return this.navigation.navigate('Series', {paramKey: oi, paramKan: ola})
 }
 
   render(){

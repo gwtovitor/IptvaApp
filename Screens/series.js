@@ -43,40 +43,8 @@ function attlista(lista, cont){
   return (
       
       <View style={{flex: 1, backgroundColor: "#000", flexDirection: 'row'}}>
-          <StatusBar hidden={true}/>
-        <View style={styles.leftview}>
-          <FlashList
-            data={route.params.paramKey.episodes}
-            key={item => item.id}
-            estimatedItemSize={10000}
-            numColumns={1}
-            renderItem={({item, index})=> 
-            <TouchableHighlight
-            underlayColor={'#000'}
-            activeOpacity={0.6}
-            onPress={()=> contador = index}>
-            <View style={styles.botaoleft}>
-              <Text style={styles.texto}>Sesson {index +1}</Text>
-            </View>
-          </TouchableHighlight>}/>
-        </View>
-        <View style={styles.rigthview}>
-          <FlashList
-            data={route.params.paramKey.episodes[contador]}
-            key={item => item.id}
-            estimatedItemSize={10000}
-            numColumns={4}
-            extraData={this.state}
-            renderItem={({item, index})=> 
-            <TouchableHighlight
-            underlayColor={'#000'}
-            activeOpacity={0.6}
-            onPress={() => navigation.navigate('Videoplayer', {paramKey: item.link})}>
-            <View style={styles.botaoleft}>
-              <Text style={styles.texto}>{item.dataName}</Text>
-            </View>
-          </TouchableHighlight>}/>
-        </View>
+         <Text style={{color:"#fff"}}>{route.params.paramKey}</Text>
+         <Text style={{color:'#fff'}}>{route.params.paramKan}</Text>
       </View>
   
     );}
