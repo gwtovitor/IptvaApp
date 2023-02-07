@@ -100,8 +100,8 @@ async attcanal(index){
 
 async envioserie(indice1, indice2){
   const response = await api.get('/serie')
-  this.setState({envioprops: response.data[0].series[0].episodes})
-  this.navigation.navigate('Series', this.state.envioprops)
+  this.setState({envioprops: response.data[indice1].series[indice2]})
+  return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
 }
 
   render(){
@@ -200,10 +200,9 @@ const styles = StyleSheet.create({
     },
     botaolatdireito:{
         width: 200,
-        height: 150,
+        height: 300,
         borderRadius: 10,
         borderWidth: 3,
-        justifyContent: 'center',
         backgroundColor: '#000',
         borderColor:'#fff',
 
@@ -216,15 +215,22 @@ const styles = StyleSheet.create({
     
   },
   imagem:{
-    width: 70,
-    height: 70,
+    width: 150,
+    height: 200,
     resizeMode: 'contain',
+    
 
   },
   texto:{
+    width: 150,
+    marginTop: 20,
     color:'#fff',
+    backgroundColor:'#2ff9',
     fontSize: 15,
+    padding: 2,
+    borderRadius: 2,
     marginLeft: 5,
     marginRight: 5,
+    marginBottom: 10,
   },
 });

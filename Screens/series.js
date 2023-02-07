@@ -32,28 +32,51 @@ const Series = ({route, navigation}) =>{
       }
   }
 
+
+function attlista(lista, cont){
+  
+  var lista2 = lista[cont]
+  return lista2
+
+}
+
   return (
       
-      <View style={{flex: 1, backgroundColor: "#000"}}>
-        <StatusBar hidden={true}/>
-
-      
-        <FlashList
-          data={route.params.paramKey}
-          key={item => item.id}
-          estimatedItemSize={10000}
-          numColumns={4}
-          renderItem={({item})=> 
-          <TouchableHighlight
-          underlayColor={'#000'}
-          activeOpacity={0.6}
-          onPress={() => navigation.navigate('Videoplayer', {paramKey: item.link})}>
-          <View style={styles.quadrado}>
-            <Text style={styles.texto}>{item.episodes}</Text>
-            <Image style={styles.imagem} source={logo(item.logo)}></Image>
-
-          </View>
-        </TouchableHighlight>}/>
+      <View style={{flex: 1, backgroundColor: "#000", flexDirection: 'row'}}>
+          <StatusBar hidden={true}/>
+        <View style={styles.leftview}>
+          <FlashList
+            data={route.params.paramKey.episodes}
+            key={item => item.id}
+            estimatedItemSize={10000}
+            numColumns={1}
+            renderItem={({item, index})=> 
+            <TouchableHighlight
+            underlayColor={'#000'}
+            activeOpacity={0.6}
+            onPress={()=> contador = index}>
+            <View style={styles.botaoleft}>
+              <Text style={styles.texto}>Sesson {index +1}</Text>
+            </View>
+          </TouchableHighlight>}/>
+        </View>
+        <View style={styles.rigthview}>
+          <FlashList
+            data={route.params.paramKey.episodes[contador]}
+            key={item => item.id}
+            estimatedItemSize={10000}
+            numColumns={4}
+            extraData={this.state}
+            renderItem={({item, index})=> 
+            <TouchableHighlight
+            underlayColor={'#000'}
+            activeOpacity={0.6}
+            onPress={() => navigation.navigate('Videoplayer', {paramKey: item.link})}>
+            <View style={styles.botaoleft}>
+              <Text style={styles.texto}>{item.dataName}</Text>
+            </View>
+          </TouchableHighlight>}/>
+        </View>
       </View>
   
     );}
@@ -67,13 +90,16 @@ const styles = StyleSheet.create({
       display: 'flex'
    
       },
-  quadrado:{
-      width: 200,
-      height: 200,
-      borderColor: '#fff',
-      borderRadius: 10,
-      borderWidth: 2,
-      alignItems: 'center'   
+  botaoleft:{
+    width: 200,
+    height: 50,
+    borderRadius: 10,
+    alignItems: 'center',   
+    justifyContent: 'center',
+    backgroundColor: 'yellow',
+    borderWidth: 2,
+    borderColor: '#fff',
+    margin: 3, 
   },
   imagem:{
       width: 100,
@@ -81,9 +107,19 @@ const styles = StyleSheet.create({
       
     },
   texto:{
-      color: "#fff",
-      backgroundColor: '#23f',
-      marginTop: 30,       
-      
+      color: "#000"      
   },
+
+  leftview:{
+    flex: 1,
+    marginBottom: 10,
+    marginTop: 10,
+  },
+
+  rigthview:{
+    backgroundColor: '#000',
+    flex: 3,
+    marginBottom: 10,
+    marginTop: 10,
+},
 });
