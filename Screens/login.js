@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import {View, TextInput, Text, StyleSheet, Modal, StatusBar, Button, TouchableOpacity} from 'react-native';
+import {View, TextInput, Text, StyleSheet, Modal, StatusBar, Button, TouchableOpacity, Linking} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation } from '@react-navigation/native';
 
@@ -26,10 +26,9 @@ class Login extends Component{
   render(){
     return(
       
-        <View style={styles.container}>
-            
+        <View style={styles.container}> 
             <StatusBar hidden={true}/>
-            <Text style={styles.textologin}> Projeto Manchete </Text>
+            <Text style={styles.textologin}> TELEVIDO </Text>
             <TextInput underlineColorAndroid = "transparent" 
             placeholder='Digite o seu Login'
             onChangeText={(user) => this.setState({login: user}) }
@@ -41,9 +40,23 @@ class Login extends Component{
             style={styles.inputs}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
             <TouchableOpacity onPress={()=>{this.navigation.navigate('Choicepage')}} style={styles.botaoarea}>
-              <Text style={styles.botaoentrar}>ENTRAR</Text>
+              <Text>ENTRAR</Text>
             </TouchableOpacity>
+                <TouchableOpacity 
+                onPress={() => { 
+                  Linking.openURL('https://wa.me/5581986716936?text=Ol%C3%A1%20Televido,%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20ou%20ajuda.'); 
+                }}> 
+                <Text style={styles.textocontato}>
+                Whatsapp para contato   
+                  <Text style={{color:"#2f2", marginLeft:3, marginTop:1,}} > (81)98671-6936 
+                  </Text>
+                  </Text>
+                </TouchableOpacity>
+        
 
+            <Text style={styles.textodev}>
+                Devlopers: GwTo / D3gS
+            </Text>
         </View>
     );
   }
@@ -84,6 +97,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     margin: 15,
+  },
+  textocontato:{
+    color:'#fff',
+    fontSize: 14,
+  },
+  textodev:{
+    color:'#fff',
+    fontSize: 10,
+    marginTop: 20,
   },
 });
 export default Login

@@ -24,7 +24,9 @@ class Mainpageseries extends Component{
         erromsg: '',
         canalselect: '',
         indice: '0',
-        envioprops: ''
+        envioprops: '',
+        cordefundodireito: '#000',
+        cordefundoesquerdo: '#fff000',
        };
        this.navigation = this.props.navigation;
        this.carregando = this.carregando.bind(this)
@@ -94,16 +96,16 @@ logo(ulrlogo){
   }
 async attcanal(index){
     const response = await api.get('/serie')
+    this.setState({indice: index})
     this.setState({canalselect: response.data[index].series})
     
 }
 
 async envioserie(indice1, indice2){
- // const response = await api.get('/serie')
-  //this.setState({envioprops: response.data[indice1].series[indice2]})
-  const oi = 'oi'
-  const ola = 'ola'
-  return this.navigation.navigate('Series', {paramKey: oi, paramKan: ola})
+  const response = await api.get('/serie')
+  this.setState({envioprops: response.data[indice1].series[indice2]})
+
+  return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
 }
 
   render(){
@@ -123,13 +125,23 @@ async envioserie(indice1, indice2){
                                 
                 <TouchableOpacity 
                 style={styles.botao}
+                onFocus={()=> this.setState({cordefundoesquerdo: '#fff180'})}
+                onBlur={()=> this.setState({cordefundoesquerdo: '#fff000'})}
                 onPress={()=> {this.attcanal(index)}}>
-                <View style={styles.botaolatesquerdo}>
+                <View style={{      width: 200,
+                                    height: 50,
+                                    borderRadius: 10,
+                                    alignItems: 'center',   
+                                    justifyContent: 'center',
+                                    backgroundColor: 'yellow',
+                                    borderWidth: 2,
+                                    borderColor: '#fff',
+                                    margin: 3,}}>
                     <Text>{item.category}</Text>
                 </View>
                 </TouchableOpacity>
-            </View>}
-            />
+                </View>}
+                />
             </View>
         <View style={styles.rigthview}>
           <View style={{alignItems: 'center'}}> 
@@ -146,8 +158,17 @@ async envioserie(indice1, indice2){
           renderItem={({item, index})=> 
 
             <TouchableOpacity
-            style ={styles.botaolatdireito}
-            onPress={()=> this.envioserie(this.state.indice, index)}>
+            
+            style ={{width: 200,
+              height: 300,
+              borderRadius: 10,
+              borderWidth: 3,
+              backgroundColor: this.state.botaolatdireito,
+              borderColor:'#fff',
+              margin:3,}}
+              onFocus={()=> this.setState({cordefundodireito: '#808080'})}
+              onBlur={()=> this.setState({cordefundodireito: '#000'})}
+               onPress={()=> this.envioserie(this.state.indice, index)}>
             <View style={styles.viewbotaodireito}>
                 <Text style={styles.texto}>{item.name}</Text>
                 <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
@@ -176,17 +197,6 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       marginTop: 10,
     },
-    botaolatesquerdo:{
-      width: 200,
-      height: 50,
-      borderRadius: 10,
-      alignItems: 'center',   
-      justifyContent: 'center',
-      backgroundColor: 'yellow',
-      borderWidth: 2,
-      borderColor: '#fff',
-      margin: 3,
-  },
     input:{
       backgroundColor: '#fff',
       height: 50,
@@ -199,16 +209,6 @@ const styles = StyleSheet.create({
         flex: 3,
         marginBottom: 10,
         marginTop: 10,
-    },
-    botaolatdireito:{
-        width: 200,
-        height: 300,
-        borderRadius: 10,
-        borderWidth: 3,
-        backgroundColor: '#000',
-        borderColor:'#fff',
-
-        margin:3,
     },
  
   viewbotaodireito:{
@@ -234,5 +234,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     marginBottom: 10,
+    textAlign: 'center'
   },
 });

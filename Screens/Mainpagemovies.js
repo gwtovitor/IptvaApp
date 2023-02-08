@@ -24,6 +24,8 @@ class Mainpagemovie extends Component{
         erromsg: '',
         canalselect: '',
         indice: '0',
+        cordefundodireito: '#000',
+        cordefundoesquerdo: '#fff000'
        };
        this.navigation = this.props.navigation;
        this.carregando = this.carregando.bind(this)
@@ -112,8 +114,18 @@ async attcanal(index){
                                 
                 <TouchableOpacity 
                 style={styles.botao}
+                onFocus={()=> this.setState({cordefundoesquerdo: '#fff180'})}
+                onBlur={()=> this.setState({cordefundoesquerdo: '#fff000'})}
                 onPress={()=> {this.attcanal(index)}}>
-                <View style={styles.botaolatesquerdo}>
+                <View style={{      width: 200,
+                                    height: 50,
+                                    borderRadius: 10,
+                                    alignItems: 'center',   
+                                    justifyContent: 'center',
+                                    backgroundColor: this.state.cordefundoesquerdo,
+                                    borderWidth: 2,
+                                    borderColor: '#fff',
+                                    margin: 3,}}>
                     <Text>{item.category}</Text>
                 </View>
                 </TouchableOpacity>
@@ -135,8 +147,18 @@ async attcanal(index){
           renderItem={({item})=> 
 
             <TouchableOpacity
-            style ={styles.botaolatdireito}
-            onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
+            style ={{       width: 200,
+                            height: 300,
+                            borderRadius: 10,
+                            borderWidth: 3,
+                            justifyContent: 'center',
+                            backgroundColor: this.state.botaolatdireito,
+                            borderColor:'#fff',
+                    
+              margin:3,}}
+              onFocus={()=> this.setState({cordefundodireito: '#808080'})}
+              onBlur={()=> this.setState({cordefundodireito: '#000'})}
+              onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
             <View style={styles.viewbotaodireito}>
                 <Text style={styles.texto}>{item.dataName}</Text>
                 <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
@@ -191,7 +213,7 @@ const styles = StyleSheet.create({
     },
     botaolatdireito:{
         width: 200,
-        height: 150,
+        height: 300,
         borderRadius: 10,
         borderWidth: 3,
         justifyContent: 'center',
@@ -207,15 +229,22 @@ const styles = StyleSheet.create({
     
   },
   imagem:{
-    width: 70,
-    height: 70,
+    width: 150,
+    height: 200,
     resizeMode: 'contain',
 
   },
   texto:{
+    width: 150,
+    marginTop: 20,
     color:'#fff',
+    backgroundColor:'#2ff9',
     fontSize: 15,
+    padding: 2,
+    borderRadius: 2,
     marginLeft: 5,
     marginRight: 5,
+    marginBottom: 10,
+    textAlign: 'center'
   },
 });

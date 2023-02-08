@@ -24,6 +24,8 @@ class Mainpagechannels extends Component{
         erromsg: '',
         canalselect: '',
         indice: '0',
+        cordefundodireito: '#000',
+        cordefundoesquerdo: '#fff000'
        };
        this.navigation = this.props.navigation;
        this.carregando = this.carregando.bind(this)
@@ -112,8 +114,18 @@ async attcanal(index){
                                 
                 <TouchableOpacity 
                 style={styles.botao}
+                onFocus={()=> this.setState({cordefundoesquerdo: '#fff180'})}
+                onBlur={()=> this.setState({cordefundoesquerdo: '#fff000'})}
                 onPress={()=> {this.attcanal(index)}}>
-                <View style={styles.botaolatesquerdo}>
+                <View style={{  width: 200,
+                                height: 50,
+                                borderRadius: 10,
+                                alignItems: 'center',   
+                                justifyContent: 'center',
+                                borderWidth: 2,
+                                borderColor: '#fff',
+                                margin: 3,
+                                backgroundColor: this.state.cordefundoesquerdo}}>
                     <Text>{item.category}</Text>
                 </View>
                 </TouchableOpacity>
@@ -135,7 +147,16 @@ async attcanal(index){
           renderItem={({item})=> 
 
             <TouchableOpacity
-            style ={styles.botaolatdireito}
+            style ={{ width: 200,
+              height: 150,
+              borderRadius: 10,
+              borderWidth: 3,
+              justifyContent: 'center',
+              borderColor:'#fff',
+              backgroundColor: this.state.cordefundodireito,
+              margin:3,}}
+              onFocus={()=> this.setState({cordefundodireito: '#808080'})}
+              onBlur={()=> this.setState({cordefundodireito: '#000'})}
             onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
             <View style={styles.viewbotaodireito}>
                 <Text style={styles.texto}>{item.dataName}</Text>
@@ -165,17 +186,6 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       marginTop: 10,
     },
-    botaolatesquerdo:{
-      width: 200,
-      height: 50,
-      borderRadius: 10,
-      alignItems: 'center',   
-      justifyContent: 'center',
-      backgroundColor: 'yellow',
-      borderWidth: 2,
-      borderColor: '#fff',
-      margin: 3,
-  },
     input:{
       backgroundColor: '#fff',
       height: 50,
@@ -188,17 +198,6 @@ const styles = StyleSheet.create({
         flex: 3,
         marginBottom: 10,
         marginTop: 10,
-    },
-    botaolatdireito:{
-        width: 200,
-        height: 150,
-        borderRadius: 10,
-        borderWidth: 3,
-        justifyContent: 'center',
-        backgroundColor: '#000',
-        borderColor:'#fff',
-
-        margin:3,
     },
  
   viewbotaodireito:{
