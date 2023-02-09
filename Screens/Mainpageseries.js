@@ -126,7 +126,7 @@ async envioserie(indice1, indice2){
                 <TouchableOpacity 
                 style={styles.botao}
                 onFocus={()=> this.setState({cordefundoesquerdo: '#fff180'})}
-                onBlur={()=> this.setState({cordefundoesquerdo: '#fff000'})}
+                onBlur
                 onPress={()=> {this.attcanal(index)}}>
                 <View style={{      width: 200,
                                     height: 50,
