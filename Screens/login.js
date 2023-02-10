@@ -45,7 +45,7 @@ class Login extends Component{
   });
   console.log(json)
  }
- //()=>{this.navigation.navigate('Choicepage')}}
+ //()=>{this.navigation.navigate('Choicepage')}} this.autenticação()
   render(){
     return(
       
@@ -62,7 +62,7 @@ class Login extends Component{
             secureTextEntry={true}
             style={styles.inputs}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
-            <TouchableOpacity onPress={()=> this.autenticação()} style={styles.botaoarea}>
+            <TouchableOpacity onPress={()=> this.navigation.navigate('Choicepage')} style={styles.botaoarea}>
               <Text>ENTRAR</Text>
             </TouchableOpacity>
                 <Text style={{color: 'red', fontSize:10}}>{this.state.msg}</Text>

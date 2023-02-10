@@ -31,6 +31,7 @@ class Mainpagechannels extends Component{
        this.carregando = this.carregando.bind(this)
        this.organizando = this.organizando.bind(this)
        this.logo = this.logo.bind(this)
+       this.colorselector = this.colorselector.bind(this)
   
   }
  
@@ -96,7 +97,9 @@ async attcanal(index){
     const response = await api.get('/channel')
     this.setState({canalselect: response.data[index].resultList})
 }
-
+colorselector(){
+  this.setState({cordefundoesquerdo: '#fff'})
+}
   render(){
     return (
       
@@ -114,8 +117,7 @@ async attcanal(index){
                                 
                 <TouchableOpacity 
                 style={styles.botao}
-                onFocus
-                onBlur
+                onFocus={()=> console.log('hell')}
                 onPress={()=> {this.attcanal(index)}}>
                 <View style={{  width: 200,
                                 height: 50,

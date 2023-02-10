@@ -29,7 +29,6 @@ class Mainpageseries extends Component{
         cordefundoesquerdo: '#fff000',
        };
        this.navigation = this.props.navigation;
-       this.carregando = this.carregando.bind(this)
        this.organizando = this.organizando.bind(this)
        this.logo = this.logo.bind(this)
        this.envioserie = this.envioserie.bind(this)
@@ -70,20 +69,10 @@ async componentDidMount(){
       return this.state.canalselect
     }else{
        const filtrado = this.state.canalselect.filter((channels)=>{
-        return channels.dataName.toLowerCase().indexOf(this.state.searchbar.toLowerCase()) !== -1
+        return channels.name.toLowerCase().indexOf(this.state.searchbar.toLowerCase()) !== -1
        })
        return filtrado
     }
-  }
-
-organizando(canaisname){
-    return canaisname.sort(function(a,b){
-      if(a.dataName > b.dataName){
-        return true
-      }else{
-        return false
-      }
-    })
   }
   
 logo(ulrlogo){
