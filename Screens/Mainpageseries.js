@@ -6,6 +6,7 @@ import { FlashList } from "@shopify/flash-list";
 
 
 
+
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
  
@@ -29,7 +30,7 @@ class Mainpageseries extends Component{
         cordefundoesquerdo: '#fff000',
        };
        this.navigation = this.props.navigation;
-       this.organizando = this.organizando.bind(this)
+
        this.logo = this.logo.bind(this)
        this.envioserie = this.envioserie.bind(this)
   
@@ -93,7 +94,7 @@ async attcanal(index){
 async envioserie(indice1, indice2){
   const response = await api.get('/serie')
   this.setState({envioprops: response.data[indice1].series[indice2]})
-
+  console.log(indice2)
   return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
 }
 
@@ -155,8 +156,6 @@ async envioserie(indice1, indice2){
               backgroundColor: this.state.botaolatdireito,
               borderColor:'#fff',
               margin:3,}}
-              onFocus={()=> this.setState({cordefundodireito: '#808080'})}
-              onBlur={()=> this.setState({cordefundodireito: '#000'})}
                onPress={()=> this.envioserie(this.state.indice, index)}>
             <View style={styles.viewbotaodireito}>
                 <Text style={styles.texto}>{item.name}</Text>

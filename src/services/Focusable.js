@@ -1,12 +1,12 @@
-import React, {useState, forwardRef} from 'react';
-import {TouchableOpacity} from 'react-native';
+import React, {useState, useRef, forwardRef} from 'react';
+import {TouchableHighlight, View} from 'react-native';
 
-const FocusableOpacity = forwardRef((props, ref) => {
+const FocusableHighlight = forwardRef((props, ref) => {
   const [focused, setFocused] = useState(false);
   const [pressed, setPressed] = useState(false);
 
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       {...props}
       ref={ref}
       onPress={(event) => {
@@ -33,13 +33,15 @@ const FocusableOpacity = forwardRef((props, ref) => {
       style={[
         props.style,
         focused && {
+          backgroundColor: props.underlayColor,
           opacity: props.activeOpacity,
         },
         focused && props.styleFocused,
         pressed && props.stylePressed,
-      ]}
-    />
+      ]}>
+      {props.children || <View />}
+    </TouchableHighlight>
   );
 });
 
-export default FocusableOpacity;
+export default FocusableHighlight;

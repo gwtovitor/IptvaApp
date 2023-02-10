@@ -117,7 +117,7 @@ colorselector(){
                                 
                 <TouchableOpacity 
                 style={styles.botao}
-                onFocus={()=> console.log('hell')}
+              
                 onPress={()=> {this.attcanal(index)}}>
                 <View style={{  width: 200,
                                 height: 50,
