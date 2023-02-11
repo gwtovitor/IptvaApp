@@ -1,8 +1,11 @@
 import React, { Component, useState} from 'react';
-import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image} from 'react-native';
+import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image,
+} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
+import { Button, Card, Icon } from '@rneui/themed';
+
 
 
 
@@ -25,16 +28,16 @@ class Mainpagechannels extends Component{
         canalselect: '',
         indice: '0',
         cordefundodireito: '#000',
-        cordefundoesquerdo: '#fff000'
+        cordefundoesquerdo: '#fff000',
+        flag : 0
        };
        this.navigation = this.props.navigation;
        this.carregando = this.carregando.bind(this)
        this.organizando = this.organizando.bind(this)
        this.logo = this.logo.bind(this)
-       this.colorselector = this.colorselector.bind(this)
-  
+      
   }
- 
+
 carregando(){
     while(this.state.canais == ''){
       return (<View>
@@ -97,9 +100,8 @@ async attcanal(index){
     const response = await api.get('/channel')
     this.setState({canalselect: response.data[index].resultList})
 }
-colorselector(){
-  this.setState({cordefundoesquerdo: '#fff'})
-}
+
+
   render(){
     return (
       
@@ -113,25 +115,19 @@ colorselector(){
             estimatedItemSize={10000}
             backgroundColor='black'
             renderItem={({item, index})=> 
-            <View>
-                                
-                <TouchableOpacity 
-                style={styles.botao}
-              
-                onPress={()=> {this.attcanal(index)}}>
-                <View style={{  width: 200,
-                                height: 50,
-                                borderRadius: 10,
-                                alignItems: 'center',   
-                                justifyContent: 'center',
-                                borderWidth: 2,
-                                borderColor: '#fff',
-                                margin: 3,
-                                backgroundColor: this.state.cordefundoesquerdo}}>
-                    <Text>{item.category}</Text>
-                </View>
-                </TouchableOpacity>
-            </View>}
+                  
+            <Button
+            title={item.category}
+            buttonStyle={{ backgroundColor: '#fff000', width: 200, height: 50,}}
+            containerStyle={{
+              width: 200,
+              marginBottom: 5,
+            }}
+            radius={10}
+            titleStyle={{ color: 'black', marginHorizontal: 20, fontSize:13, }}
+            onPress={()=> this.attcanal(index)}
+          />
+                }
             />
             </View>
         <View style={styles.rigthview}>
@@ -146,30 +142,33 @@ colorselector(){
           key={item => item.id}
           estimatedItemSize={5000}
           numColumns={3}
+          marginLeft={-2}
           renderItem={({item})=> 
-
-            <TouchableOpacity
-            style ={{ width: 200,
-              height: 150,
-              borderRadius: 10,
-              borderWidth: 3,
-              justifyContent: 'center',
-              borderColor:'#fff',
-              backgroundColor: this.state.cordefundodireito,
-              margin:3,}}
-              onFocus={()=> this.setState({cordefundodireito: '#808080'})}
-              onBlur={()=> this.setState({cordefundodireito: '#000'})}
-            onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
-            <View style={styles.viewbotaodireito}>
-                <Text style={styles.texto}>{item.dataName}</Text>
-                <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
-             
-            </View>
-          </TouchableOpacity>}/>
+          <Card containerStyle={{width: 180, height: 200, backgroundColor:'#2ff2', alignItems: 'center', justifyContent:'center'
+          ,borderRadius:10, marginRight: -10}}>
+              
+              <Card.Title>{item.dataName}</Card.Title>
+              <Card.Divider />
+              <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
+              <Button
+              onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}
+                buttonStyle={{
+                  borderRadius: 5,
+                  marginLeft: 0,
+                  marginRight: 0,
+                  marginBottom: 0,
+                  backgroundColor: '#fff000'
+                  
+                }}
+                titleStyle={{ color: 'black', marginHorizontal: 20, fontSize:13, }}
+                title={item.dataName}
+              />
+        </Card>
+           }/>
         </View>
       </View>  
         
-    
+       
   
     );}}
     
@@ -187,6 +186,7 @@ const styles = StyleSheet.create({
       flex: 1,
       marginBottom: 10,
       marginTop: 10,
+      marginLeft: 5,
     },
     input:{
       backgroundColor: '#fff',
