@@ -1,8 +1,10 @@
 import React, { Component, useState } from 'react';
-import {View, TextInput, Text, StyleSheet, Modal, StatusBar, Button, TouchableOpacity, Linking} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation } from '@react-navigation/native';
 import apipost from '../src/services/postapi';
+import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
 
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -45,6 +47,7 @@ class Login extends Component{
   });
   console.log(json)
  }
+
  //()=>{this.navigation.navigate('Choicepage')}} this.autenticação()
   render(){
     return(
@@ -52,19 +55,28 @@ class Login extends Component{
         <View style={styles.container}> 
             <StatusBar hidden={true}/>
             <Text style={styles.textologin}> TELEVIDO </Text>
-            <TextInput underlineColorAndroid = "transparent" 
-            placeholder='Digite o seu Login'
-            onChangeText={(user) => this.setState({login: user}) }
-            style={styles.inputs}>
-            </TextInput>
+      
+                <TextInput underlineColorAndroid = "transparent"
+                placeholder='Digite o seu Login'
+                onChangeText={(user) => this.setState({login: user}) }
+                style={styles.inputs}>
+                </TextInput>
+          <TouchableWithoutFeedback
+              onFocus={true}> 
             <TextInput underlineColorAndroid = "transparent" 
             placeholder='Digite sua senha' 
             secureTextEntry={true}
             style={styles.inputs}
+            isFocused={true}
+            ref={(c) => this._input = c}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
-            <TouchableOpacity onPress={()=> this.navigation.navigate('Choicepage')} style={styles.botaoarea}>
+         </TouchableWithoutFeedback>
+          <View>
+            <TouchableOpacity 
+            onPress={()=> this.navigation.navigate('Choicepage')} style={styles.botaoarea}>
               <Text>ENTRAR</Text>
             </TouchableOpacity>
+            </View>
                 <Text style={{color: 'red', fontSize:10}}>{this.state.msg}</Text>
                 <TouchableOpacity 
                 onPress={() => { 

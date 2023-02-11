@@ -1,10 +1,12 @@
 import React, { Component, useState} from 'react';
-import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image,
+import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image, TVEventHandler, useTVEventHandler
 } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
 import { Button, Card, Icon } from '@rneui/themed';
+import { TouchableHighlight, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
 
 
 
@@ -36,6 +38,39 @@ class Mainpagechannels extends Component{
        this.organizando = this.organizando.bind(this)
        this.logo = this.logo.bind(this)
       
+  }
+
+
+  _enableTVEventHandler() {
+    this._tvEventHandler = new TVEventHandler();
+    this._tvEventHandler.enable(this, function(cmp, evt) {
+      if (evt && evt.eventType === 'right') {
+        cmp.setState({board: cmp.state.board.move(2)});
+      } else if(evt && evt.eventType === 'up') {
+        cmp.setState({board: cmp.state.board.move(1)});
+      } else if(evt && evt.eventType === 'left') {
+        cmp.setState({board: cmp.state.board.move(0)});
+      } else if(evt && evt.eventType === 'down') {
+        cmp.setState({board: cmp.state.board.move(3)});
+      } else if(evt && evt.eventType === 'playPause') {
+        cmp.restartGame();
+      }
+    });
+  }
+
+  _disableTVEventHandler() {
+    if (this._tvEventHandler) {
+      this._tvEventHandler.disable();
+      delete this._tvEventHandler;
+    }
+  }
+
+  componentDidMount() {
+    this._enableTVEventHandler();
+  }
+
+  componentWillUnmount() {
+    this._disableTVEventHandler();
   }
 
 carregando(){
@@ -144,26 +179,14 @@ async attcanal(index){
           numColumns={3}
           marginLeft={-2}
           renderItem={({item})=> 
-          <Card containerStyle={{width: 180, height: 200, backgroundColor:'#2ff2', alignItems: 'center', justifyContent:'center'
-          ,borderRadius:10, marginRight: -10}}>
+            <TouchableOpacity style={{width: 200, height: 200, backgroundColor: '#fff'}}
+           
+            pressable={true}
+            isFocused={true}
+            >
+                <Text>ola</Text>
               
-              <Card.Title>{item.dataName}</Card.Title>
-              <Card.Divider />
-              <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
-              <Button
-              onPress={() => this.navigation.navigate('Videoplayer', {paramKey: item.link})}
-                buttonStyle={{
-                  borderRadius: 5,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginBottom: 0,
-                  backgroundColor: '#fff000'
-                  
-                }}
-                titleStyle={{ color: 'black', marginHorizontal: 20, fontSize:13, }}
-                title={item.dataName}
-              />
-        </Card>
+            </TouchableOpacity>
            }/>
         </View>
       </View>  
