@@ -29,14 +29,24 @@ class Login extends Component{
  }
  
  async autenticação(){
-  const json = JSON.stringify({ username: this.state.login,
+  const login = await apipost.post('/login', { username: this.state.login,
                                 password: this.state.senha})
-  const login = await apipost.post('/user', json)
+                                .then((response)=>{
+                                  if(response.data){
+                                    console.log(response.data)
+                                    if(response.data.message){
+                                      this.setState({msg: response.data.message})
+                                     }else{
+                                        this.navigation.navigate('Choicepage')
+                                      }
+                                  }
+                                })
       .catch(function (error) {
         if (error.response) {
 
       console.log(error.response.data);
       console.log('----------data up------------')
+
       console.log(error.response.status);
       console.log('-----------status up-----------')
       console.log(error.response.headers);
@@ -45,8 +55,7 @@ class Login extends Component{
     console.log(error.config);
     console.log('--------------config up --------')
   });
-  console.log(json)
- }
+  }
 
  //()=>{this.navigation.navigate('Choicepage')}} this.autenticação()
   render(){
@@ -73,11 +82,12 @@ class Login extends Component{
          </TouchableWithoutFeedback>
           <View>
             <TouchableOpacity 
-            onPress={()=> this.navigation.navigate('Choicepage')} style={styles.botaoarea}>
+            onPress={()=> this.autenticação()} 
+            style={styles.botaoarea}>
               <Text>ENTRAR</Text>
             </TouchableOpacity>
             </View>
-                <Text style={{color: 'red', fontSize:10}}>{this.state.msg}</Text>
+                <Text style={{color: 'red', fontSize:12}}>{this.state.msg}</Text>
                 <TouchableOpacity 
                 onPress={() => { 
                   Linking.openURL('https://wa.me/5581986716936?text=Ol%C3%A1%20Televido,%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20ou%20ajuda.'); 
