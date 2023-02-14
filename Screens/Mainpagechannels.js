@@ -1,11 +1,10 @@
 import React, { Component, useState} from 'react';
-import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image, TVEventHandler, useTVEventHandler
-} from 'react-native';
+import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
 import { Button, Card, Icon } from '@rneui/themed';
-import { TouchableHighlight, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
 
 
 
@@ -38,39 +37,6 @@ class Mainpagechannels extends Component{
        this.organizando = this.organizando.bind(this)
        this.logo = this.logo.bind(this)
       
-  }
-
-
-  _enableTVEventHandler() {
-    this._tvEventHandler = new TVEventHandler();
-    this._tvEventHandler.enable(this, function(cmp, evt) {
-      if (evt && evt.eventType === 'right') {
-        cmp.setState({board: cmp.state.board.move(2)});
-      } else if(evt && evt.eventType === 'up') {
-        cmp.setState({board: cmp.state.board.move(1)});
-      } else if(evt && evt.eventType === 'left') {
-        cmp.setState({board: cmp.state.board.move(0)});
-      } else if(evt && evt.eventType === 'down') {
-        cmp.setState({board: cmp.state.board.move(3)});
-      } else if(evt && evt.eventType === 'playPause') {
-        cmp.restartGame();
-      }
-    });
-  }
-
-  _disableTVEventHandler() {
-    if (this._tvEventHandler) {
-      this._tvEventHandler.disable();
-      delete this._tvEventHandler;
-    }
-  }
-
-  componentDidMount() {
-    this._enableTVEventHandler();
-  }
-
-  componentWillUnmount() {
-    this._disableTVEventHandler();
   }
 
 carregando(){
@@ -179,15 +145,22 @@ async attcanal(index){
           numColumns={3}
           marginLeft={-2}
           renderItem={({item})=> 
-            <TouchableOpacity style={{width: 200, height: 200, backgroundColor: '#fff'}}
-           
-            pressable={true}
-            isFocused={true}
-            >
-                <Text>ola</Text>
-              
-            </TouchableOpacity>
-           }/>
+            <TouchableOpacity
+            
+            style ={{width: 200,
+              height: 150,
+              borderRadius: 10,
+              borderWidth: 3,
+              backgroundColor: this.state.botaolatdireito,
+              borderColor:'#fff',
+              margin:3,}}
+               onPress={()=> this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
+                <View style={styles.viewbotaodireito}>
+                <Text style={styles.texto}>{item.dataName}</Text>
+                <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
+             
+            </View>
+          </TouchableOpacity>}/>
         </View>
       </View>  
         
@@ -227,7 +200,8 @@ const styles = StyleSheet.create({
  
   viewbotaodireito:{
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+  
     
   },
   imagem:{
@@ -241,5 +215,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 5,
     marginRight: 5,
+    marginTop: 20,
   },
 });

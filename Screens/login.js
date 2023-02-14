@@ -29,13 +29,16 @@ class Login extends Component{
  }
  
  async autenticação(){
+  if(this.state.login == '' || this.state.senha == ''){
+    this.setState({msg: 'Digite um usuario e Senha'})
+  }else{
   const login = await apipost.post('/login', { username: this.state.login,
                                 password: this.state.senha})
                                 .then((response)=>{
                                   if(response.data){
                                     console.log(response.data)
-                                    if(response.data.message){
-                                      this.setState({msg: response.data.message})
+                                    if(response.data.message == 'Username or Password invalid.'){
+                                      this.setState({msg: 'Usuario ou Senha Invalida!'})
                                      }else{
                                         this.navigation.navigate('Choicepage')
                                       }
@@ -55,7 +58,7 @@ class Login extends Component{
     console.log(error.config);
     console.log('--------------config up --------')
   });
-  }
+  }}
 
  //()=>{this.navigation.navigate('Choicepage')}} this.autenticação()
   render(){

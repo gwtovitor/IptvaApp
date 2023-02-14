@@ -61,7 +61,7 @@ async componentDidMount(){
         })
         this.setState({
           canais: response.data,
-          canalselect: response.data[this.state.indice].series
+          canalselect: response.data[this.state.indice]
         })
  }
  
@@ -87,14 +87,14 @@ logo(ulrlogo){
 async attcanal(index){
     const response = await api.get('/serie')
     this.setState({indice: index})
-    this.setState({canalselect: response.data[index].series})
+    this.setState({canalselect: response.data[index]})
     
 }
 
 async envioserie(indice1, indice2){
   const response = await api.get('/serie')
   this.setState({envioprops: response.data[indice1].series[indice2]})
-  console.log(indice2)
+  console.log('-------------------------' + indice2)
   return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
 }
 
@@ -127,7 +127,7 @@ async envioserie(indice1, indice2){
                                     borderWidth: 2,
                                     borderColor: '#fff',
                                     margin: 3,}}>
-                    <Text>{item.category}</Text>
+                    <Text>{item.dataName}</Text>
                 </View>
                 </TouchableOpacity>
                 </View>}
@@ -164,7 +164,7 @@ async envioserie(indice1, indice2){
             </View>
           </TouchableOpacity>}/>
         </View>
-      </View>  
+      </View>   
         
     
   
