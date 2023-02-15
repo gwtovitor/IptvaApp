@@ -1,9 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component} from 'react';
 import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useNavigation } from '@react-navigation/native';
 import apipost from '../src/services/postapi';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 async function changeScreenOrientation() {
@@ -23,44 +23,79 @@ class Login extends Component{
         login: '',
         senha: '',
         msg: '',
+        token: '',
        };
        this.navigation = this.props.navigation;
        this.autenticação = this.autenticação.bind(this)
  }
  
  async autenticação(){
-  if(this.state.login == '' || this.state.senha == ''){
-    this.setState({msg: 'Digite um usuario e Senha'})
-  }else{
-  const login = await apipost.post('/login', { username: this.state.login,
-                                password: this.state.senha})
-                                .then((response)=>{
-                                  if(response.data){
-                                    console.log(response.data)
+    try{
+        const value = await AsyncStorage.getItem('token')
+        if(value !== null){
+          const login = await apipost.post('/login', {headers:{
+            authorization: `Bearer ${value}`
+            
+          }})
+                    .then((response)=>{
+              console.log(response.data + 'this is request')
+          }).catch(function (error) {
+            if (error.response) {
+  
+          console.log(error.response.data);
+          console.log('----------data up------------')
+  
+          console.log(error.response.status);
+          console.log('-----------status up-----------')
+          console.log(error.response.headers);
+          console.log('----------headers up------------')
+        } 
+        console.log(error.config);
+        console.log('--------------config up --------')
+      });
+        }else{
+          console.log('sem data')
+        }
+    }catch(e){
+        console.log(e)
+    }
+    if(this.state.login == '' || this.state.senha == ''){
+      this.setState({msg: 'Digite um usuario e Senha'})
+    }else{
+    const login = await apipost.post('/login', { username: this.state.login,
+                                  password: this.state.senha})
+                                  .then((response)=>{
                                     if(response.data.message == 'Username or Password invalid.'){
-                                      this.setState({msg: 'Usuario ou Senha Invalida!'})
-                                     }else{
-                                        this.navigation.navigate('Choicepage')
-                                      }
-                                  }
-                                })
-      .catch(function (error) {
-        if (error.response) {
+                                        this.setState({msg: 'Usuario ou Senha Invalida!'})
+                                      }else{
+                                          this.setState({token: response.data.token})
+                                          console.log(this.state.token)
+                                         try{
+                                          AsyncStorage.setItem('token', this.state.token)
+                                          this.navigation.replace('Choicepage')
+                                         } catch (e){
+                                            console.log(e)
+                                         }
+                                         
+                                        }
+                                    
+                                  })
+        .catch(function (error) {
+          if (error.response) {
 
-      console.log(error.response.data);
-      console.log('----------data up------------')
+        console.log(error.response.data);
+        console.log('----------data up------------')
 
-      console.log(error.response.status);
-      console.log('-----------status up-----------')
-      console.log(error.response.headers);
-      console.log('----------headers up------------')
-    } 
-    console.log(error.config);
-    console.log('--------------config up --------')
-  });
-  }}
+        console.log(error.response.status);
+        console.log('-----------status up-----------')
+        console.log(error.response.headers);
+        console.log('----------headers up------------')
+      } 
+      console.log(error.config);
+      console.log('--------------config up --------')
+    });
+    }}
 
- //()=>{this.navigation.navigate('Choicepage')}} this.autenticação()
   render(){
     return(
       
@@ -70,7 +105,7 @@ class Login extends Component{
       
                 <TextInput underlineColorAndroid = "transparent"
                 placeholder='Digite o seu Login'
-                onChangeText={(user) => this.setState({login: user}) }
+                onChangeText={(user) => {this.setState({login: user.toLowerCase()}) }}
                 style={styles.inputs}>
                 </TextInput>
           <TouchableWithoutFeedback

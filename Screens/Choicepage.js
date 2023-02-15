@@ -16,18 +16,24 @@ const Choicepage = ({navigation}) =>{
     return(
       
         <View style={styles.container}>
-            
+           
+           <View style={{alignItems: 'flex-end'}}>
+           <TouchableOpacity onPress={()=>{navigation.replace('Login')}} style={styles.sair}>
+              <Text>Sair</Text>
+            </TouchableOpacity>
+           </View>
+            <View style={styles.viewchoice}>
             <StatusBar hidden={true}/>
             <TouchableOpacity onPress={()=>{navigation.navigate('Mainpagechannels')}} style={styles.botaoarea}>
-              <Text style={styles.botaoentrar}>Canais</Text>
+              <Text>Canais</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>{navigation.navigate('Mainpagemovie')}} style={styles.botaoarea}>
-              <Text style={styles.botaoentrar}>Filmes</Text>
+              <Text>Filmes</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>{navigation.navigate('Mainpageseries')}} style={styles.botaoarea}>
-              <Text style={styles.botaoentrar}>Series</Text>
+              <Text>Series</Text>
             </TouchableOpacity>
-
+            </View>
         </View>
     );
   }
@@ -35,12 +41,13 @@ const Choicepage = ({navigation}) =>{
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#000',
     display: 'flex'
   },
-
+  viewchoice:{
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   inputs:{
     borderColor: 'black',
     width: 300,
@@ -68,6 +75,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     margin: 15,
+  },
+  sair:{
+    width: 100,
+    height: 40,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    margin: 20,
+    marginBottom: 30,
   },
 });
 export default Choicepage
