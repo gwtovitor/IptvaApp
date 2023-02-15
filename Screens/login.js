@@ -11,9 +11,39 @@ async function changeScreenOrientation() {
  
 }
 
+async function start(){
+  try{
+    const value = await AsyncStorage.getItem('token')
+    if(value !== null){
+      const login = await apipost.post('/login', { username: '',
+        password: ''}, {headers:{
+        'Authorization': `Bearer ${value}`
+      }}).then((response)=>{
+          console.log(response.data + 'this is request')
+      }).catch(function (error) {
+        if (error.response) {
+
+      console.log(error.response.data);
+      console.log('----------data up------------')
+
+      console.log(error.response.status);
+      console.log('-----------status up-----------')
+      console.log(error.response.headers);
+      console.log('----------headers up------------')
+    } 
+    console.log(error.config);
+    console.log('--------------config up --------')
+  });
+    }else{
+      console.log('sem data')
+    }
+}catch(e){
+    console.log(e)
+}
+}
 
 changeScreenOrientation()
-
+start()
 
 class Login extends Component{
 
@@ -30,36 +60,8 @@ class Login extends Component{
  }
  
  async autenticação(){
-    try{
-        const value = await AsyncStorage.getItem('token')
-        if(value !== null){
-          const login = await apipost.post('/login', {headers:{
-            authorization: `Bearer ${value}`
-            
-          }})
-                    .then((response)=>{
-              console.log(response.data + 'this is request')
-          }).catch(function (error) {
-            if (error.response) {
-  
-          console.log(error.response.data);
-          console.log('----------data up------------')
-  
-          console.log(error.response.status);
-          console.log('-----------status up-----------')
-          console.log(error.response.headers);
-          console.log('----------headers up------------')
-        } 
-        console.log(error.config);
-        console.log('--------------config up --------')
-      });
-        }else{
-          console.log('sem data')
-        }
-    }catch(e){
-        console.log(e)
-    }
-    if(this.state.login == '' || this.state.senha == ''){
+
+  if(this.state.login == '' || this.state.senha == ''){
       this.setState({msg: 'Digite um usuario e Senha'})
     }else{
     const login = await apipost.post('/login', { username: this.state.login,

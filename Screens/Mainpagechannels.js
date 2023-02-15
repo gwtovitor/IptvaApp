@@ -1,9 +1,10 @@
-import React, { Component, useState} from 'react';
+import React, { Component} from 'react';
 import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
-import { Button, Card, Icon } from '@rneui/themed';
+import { Button} from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -51,7 +52,10 @@ carregando(){
             }
     }
 async componentDidMount(){
-     const response = await api.get('/channel').catch((error)=>{
+    const value = await AsyncStorage.getItem('token')
+     const response = await api.get('/channel', {headers:{
+      'Authorization': `Bearer ${value}`
+     }}).catch((error)=>{
         if(error.response){
             this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
           }

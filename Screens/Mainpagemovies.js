@@ -1,9 +1,9 @@
-import React, { Component, useState} from 'react';
+import React, { Component} from 'react';
 import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
-
+import { Button } from '@rneui/themed';
 
 
 async function changeScreenOrientation() {
@@ -112,23 +112,17 @@ async attcanal(index){
             renderItem={({item, index})=> 
             <View>
                                 
-                <TouchableOpacity 
-                style={styles.botao}
-                onFocus={()=> this.setState({cordefundoesquerdo: '#fff180'})}
-                onBlur={()=> this.setState({cordefundoesquerdo: '#fff000'})}
-                onPress={()=> {this.attcanal(index)}}>
-                <View style={{      width: 200,
-                                    height: 50,
-                                    borderRadius: 10,
-                                    alignItems: 'center',   
-                                    justifyContent: 'center',
-                                    backgroundColor: this.state.cordefundoesquerdo,
-                                    borderWidth: 2,
-                                    borderColor: '#fff',
-                                    margin: 3,}}>
-                    <Text>{item.category}</Text>
-                </View>
-                </TouchableOpacity>
+            <Button
+            title={item.category}
+            buttonStyle={{ backgroundColor: '#fff000', width: 200, height: 50,}}
+            containerStyle={{
+              width: 200,
+              marginBottom: 5,
+            }}
+            radius={10}
+            titleStyle={{ color: 'black', marginHorizontal: 20, fontSize:13, }}
+            onPress={()=> this.attcanal(index)}
+          />
             </View>}
             />
             </View>

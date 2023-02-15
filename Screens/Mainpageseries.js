@@ -3,6 +3,8 @@ import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, Activity
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button } from '@rneui/themed';
 
 
 
@@ -48,7 +50,10 @@ carregando(){
             }
     }
 async componentDidMount(){
-     const response = await api.get('/serie').catch((error)=>{
+  const value = await AsyncStorage.getItem('token')
+  const response = await api.get('/serie', {headers:{
+   'Authorization': `Bearer ${value}`
+  }}).catch((error)=>{
         if(error.response){
             this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
           }
@@ -85,14 +90,20 @@ logo(ulrlogo){
       }
   }
 async attcanal(index){
-    const response = await api.get('/serie')
+  const value = await AsyncStorage.getItem('token')
+  const response = await api.get('/serie', {headers:{
+    'Authorization': `Bearer ${value}`
+    }})
     this.setState({indice: index})
     this.setState({canalselect: response.data[index].series})
     
 }
 
 async envioserie(indice1, indice2){
-  const response = await api.get('/serie')
+  const value = await AsyncStorage.getItem('token')
+  const response = await api.get('/serie', {headers:{
+    'Authorization': `Bearer ${value}`
+    }})
   this.setState({envioprops: response.data[indice1].series[indice2]})
   return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
 }
@@ -112,24 +123,18 @@ async envioserie(indice1, indice2){
             renderItem={({item, index})=> 
             <View>
                                 
-                <TouchableOpacity 
-                style={styles.botao}
-                onFocus={()=> this.setState({cordefundoesquerdo: '#fff180'})}
-                onBlur
-                onPress={()=> {this.attcanal(index)}}>
-                <View style={{      width: 200,
-                                    height: 50,
-                                    borderRadius: 10,
-                                    alignItems: 'center',   
-                                    justifyContent: 'center',
-                                    backgroundColor: 'yellow',
-                                    borderWidth: 2,
-                                    borderColor: '#fff',
-                                    margin: 3,}}>
-                    <Text>{item.category}</Text>
-                </View>
-                </TouchableOpacity>
-                </View>}
+          <Button
+            title={item.category}
+            buttonStyle={{ backgroundColor: '#fff000', width: 200, height: 50,}}
+            containerStyle={{
+              width: 200,
+              marginBottom: 5,
+            }}
+            radius={10}
+            titleStyle={{ color: 'black', marginHorizontal: 20, fontSize:13, }}
+            onPress={()=> this.attcanal(index)}
+          />
+            </View>}
                 />
             </View>
         <View style={styles.rigthview}>
