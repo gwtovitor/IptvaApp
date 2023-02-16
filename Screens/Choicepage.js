@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import {View, TextInput, Text, StyleSheet, Modal, StatusBar, Button, TouchableOpacity} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 async function changeScreenOrientation() {
   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -18,7 +18,10 @@ const Choicepage = ({navigation}) =>{
         <View style={styles.container}>
            
            <View style={{alignItems: 'flex-end'}}>
-           <TouchableOpacity onPress={()=>{navigation.replace('Login')}} style={styles.sair}>
+           <TouchableOpacity onPress={()=>{
+            navigation.replace('Login')
+            AsyncStorage.removeItem('token')
+            }} style={styles.sair}>
               <Text>Sair</Text>
             </TouchableOpacity>
            </View>

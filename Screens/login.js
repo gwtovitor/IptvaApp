@@ -4,6 +4,9 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import apipost from '../src/services/postapi';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../src/services/getapi';
+
+
 
 
 async function changeScreenOrientation() {
@@ -11,39 +14,8 @@ async function changeScreenOrientation() {
  
 }
 
-async function start(){
-  try{
-    const value = await AsyncStorage.getItem('token')
-    if(value !== null){
-      const login = await apipost.post('/login', { username: '',
-        password: ''}, {headers:{
-        'Authorization': `Bearer ${value}`
-      }}).then((response)=>{
-          console.log(response.data + 'this is request')
-      }).catch(function (error) {
-        if (error.response) {
-
-      console.log(error.response.data);
-      console.log('----------data up------------')
-
-      console.log(error.response.status);
-      console.log('-----------status up-----------')
-      console.log(error.response.headers);
-      console.log('----------headers up------------')
-    } 
-    console.log(error.config);
-    console.log('--------------config up --------')
-  });
-    }else{
-      console.log('sem data')
-    }
-}catch(e){
-    console.log(e)
-}
-}
 
 changeScreenOrientation()
-start()
 
 class Login extends Component{
 
@@ -57,8 +29,30 @@ class Login extends Component{
        };
        this.navigation = this.props.navigation;
        this.autenticação = this.autenticação.bind(this)
+       this.start = this.start.bind(this)
  }
  
+ async start(){
+
+  try{
+    const value = await AsyncStorage.getItem('token')
+    if(value !== null){
+      const login = await api.get('/serie', {headers:{
+        'Authorization': `Bearer ${value}`
+      }}).then((response)=>{
+          if(response.data){
+            this.navigation.navigate('Choicepage')
+          }
+      })
+    }else{
+      return
+    }
+}catch(e){
+   
+}
+}
+
+
  async autenticação(){
 
   if(this.state.login == '' || this.state.senha == ''){
@@ -71,12 +65,12 @@ class Login extends Component{
                                         this.setState({msg: 'Usuario ou Senha Invalida!'})
                                       }else{
                                           this.setState({token: response.data.token})
-                                          console.log(this.state.token)
+                                          
                                          try{
                                           AsyncStorage.setItem('token', this.state.token)
                                           this.navigation.replace('Choicepage')
                                          } catch (e){
-                                            console.log(e)
+                                           
                                          }
                                          
                                         }
@@ -99,6 +93,7 @@ class Login extends Component{
     }}
 
   render(){
+    this.start()
     return(
       
         <View style={styles.container}> 

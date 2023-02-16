@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
+import { StyleSheet, View, StatusBar, Alert } from 'react-native';
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -11,7 +11,7 @@ async function changeScreenOrientation() {
 changeScreenOrientation()
 
 
-const Videoplayer = ({route}) =>{ 
+const Videoplayer = ({route, navigation}) =>{ 
 
           return(<View style={styles.container}>
                <StatusBar hidden={true}/>
@@ -19,7 +19,10 @@ const Videoplayer = ({route}) =>{
             source={{ uri: route.params.paramKey}}
             rate={1.0}
             onError={(error) => {
-              alert('Não foi possivel conectar com o servidor, favor entrar em contato com o administrador')
+              Alert.alert('Error', 'Não foi possivel conectar com o servidor, favor entrar em contato com o administrador',[{
+                text: 'OK',
+                onPress: ()=> navigation.goBack()
+              }])
               }} 
             volume={1.0}
             resizeMode='contain'

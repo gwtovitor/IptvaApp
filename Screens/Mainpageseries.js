@@ -1,5 +1,5 @@
-import React, { Component, useState} from 'react';
-import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image} from 'react-native';
+import React, { Component} from 'react';
+import {View, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, ActivityIndicator, Image, Alert} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
@@ -55,13 +55,25 @@ async componentDidMount(){
    'Authorization': `Bearer ${value}`
   }}).catch((error)=>{
         if(error.response){
-            this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
+            Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+              text: 'OK',
+              onPress: ()=> {
+                navigation.navigate('Login')}
+            }])
           }
           else if(error.request){
-            this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
+            Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+              text: 'OK',
+              onPress: ()=> {
+                navigation.navigate('Login')}
+            }])
           }
           else{
-            this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
+            Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+              text: 'OK',
+              onPress: ()=> {
+                navigation.navigate('Login')}
+            }])
           }
         })
         this.setState({
@@ -89,11 +101,33 @@ logo(ulrlogo){
         return {uri: ulrlogo}
       }
   }
-async attcanal(index){
+async attcanal(index, navigation){
   const value = await AsyncStorage.getItem('token')
   const response = await api.get('/serie', {headers:{
     'Authorization': `Bearer ${value}`
-    }})
+    }}).catch(function (error) {
+      if(error.response){
+        Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+          text: 'OK',
+          onPress: ()=> {
+            navigation.navigate('Login')}
+        }])
+      }
+      else if(error.request){
+        Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+          text: 'OK',
+          onPress: ()=> {
+            navigation.navigate('Login')}
+        }])
+      }
+      else{
+        Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+          text: 'OK',
+          onPress: ()=> {
+            navigation.navigate('Login')}
+        }])
+      } 
+ });
     this.setState({indice: index})
     this.setState({canalselect: response.data[index].series})
     
@@ -103,7 +137,29 @@ async envioserie(indice1, indice2){
   const value = await AsyncStorage.getItem('token')
   const response = await api.get('/serie', {headers:{
     'Authorization': `Bearer ${value}`
-    }})
+    }}).catch(function (error) {
+      if(error.response){
+        Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+          text: 'OK',
+          onPress: ()=> {
+            navigation.navigate('Login')}
+        }])
+      }
+      else if(error.request){
+        Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+          text: 'OK',
+          onPress: ()=> {
+            navigation.navigate('Login')}
+        }])
+      }
+      else{
+        Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+          text: 'OK',
+          onPress: ()=> {
+            navigation.navigate('Login')}
+        }])
+      } 
+ });
   this.setState({envioprops: response.data[indice1].series[indice2]})
   return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
 }
@@ -132,7 +188,7 @@ async envioserie(indice1, indice2){
             }}
             radius={10}
             titleStyle={{ color: 'black', marginHorizontal: 20, fontSize:13, }}
-            onPress={()=> this.attcanal(index)}
+            onPress={()=> this.attcanal(index, this.navigation)}
           />
             </View>}
                 />
