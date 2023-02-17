@@ -52,20 +52,32 @@ carregando(){
             }
     }
 async componentDidMount(){
-    const value = await AsyncStorage.getItem('token')
-     const response = await api.get('/channel', {headers:{
-      'Authorization': `Bearer ${value}`
-     }}).catch((error)=>{
-        if(error.response){
-            this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
-          }
-          else if(error.request){
-            this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
-          }
-          else{
-            this.setState({erromsg: 'Erro ao se conectar com servidor, favor reportar ao administrador'})
-          }
-        })
+  const value = await AsyncStorage.getItem('token')
+  const response = await api.get('/channel', {headers:{
+   'Authorization': `Bearer ${value}`
+   }}).catch(function (error) {
+   if(error.response){
+     Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+       text: 'OK',
+       onPress: ()=> {
+         navigation.navigate('Login')}
+     }])
+   }
+   else if(error.request){
+     Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+       text: 'OK',
+       onPress: ()=> {
+         navigation.navigate('Login')}
+     }])
+   }
+   else{
+     Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+       text: 'OK',
+       onPress: ()=> {
+         navigation.navigate('Login')}
+     }])
+   } 
+});
         this.setState({
           canais: response.data,
           canalselect: response.data[this.state.indice].resultList
@@ -102,7 +114,32 @@ logo(ulrlogo){
       }
   }
 async attcanal(index){
-    const response = await api.get('/channel')
+  const value = await AsyncStorage.getItem('token')
+  const response = await api.get('/channel', {headers:{
+   'Authorization': `Bearer ${value}`
+   }}).catch(function (error) {
+   if(error.response){
+     Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+       text: 'OK',
+       onPress: ()=> {
+         navigation.navigate('Login')}
+     }])
+   }
+   else if(error.request){
+     Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+       text: 'OK',
+       onPress: ()=> {
+         navigation.navigate('Login')}
+     }])
+   }
+   else{
+     Alert.alert('Error', 'Usuario expirado, favor logar novamente',[{
+       text: 'OK',
+       onPress: ()=> {
+         navigation.navigate('Login')}
+     }])
+   } 
+});
     this.setState({canalselect: response.data[index].resultList})
 }
 

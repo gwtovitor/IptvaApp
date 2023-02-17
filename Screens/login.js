@@ -1,8 +1,8 @@
 import React, { Component} from 'react';
-import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking, Image} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import apipost from '../src/services/postapi';
-import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../src/services/getapi';
 
@@ -26,32 +26,46 @@ class Login extends Component{
         senha: '',
         msg: '',
         token: '',
+        secure: true,
+        img: require('../src/show.png'),
        };
        this.navigation = this.props.navigation;
        this.autenticação = this.autenticação.bind(this)
        this.start = this.start.bind(this)
+       this.hiddenicon = this.hiddenicon.bind(this)
  }
- 
+
+
  async start(){
 
-  try{
-    const value = await AsyncStorage.getItem('token')
-    if(value !== null){
-      const login = await api.get('/serie', {headers:{
-        'Authorization': `Bearer ${value}`
-      }}).then((response)=>{
-          if(response.data){
-            this.navigation.navigate('Choicepage')
-          }
-      })
-    }else{
-      return
+      try{
+        const value = await AsyncStorage.getItem('token')
+        if(value !== null){
+          const login = await api.get('/serie', {headers:{
+            'Authorization': `Bearer ${value}`
+          }}).then((response)=>{
+              if(response.data){
+                this.navigation.navigate('Choicepage')
+              }
+          })
+        }else{
+          return
+        }
+    }catch(e){
+      
     }
-}catch(e){
-   
-}
 }
 
+hiddenicon(state){
+  if (state != true){
+    this.setState({secure: true})
+    this.setState({img: require('../src/show.png')})
+
+  }else{
+    this.setState({secure: false})
+    this.setState({img: require('../src/hidden.png')})
+  }
+}
 
  async autenticação(){
 
@@ -103,18 +117,26 @@ class Login extends Component{
                 <TextInput underlineColorAndroid = "transparent"
                 placeholder='Digite o seu Login'
                 onChangeText={(user) => {this.setState({login: user.toLowerCase()}) }}
-                style={styles.inputs}>
+                style={{    borderColor: 'black',
+                width: 300,
+                height: 40, 
+                margin: 5,
+                borderWidth: 2,
+                backgroundColor: '#fff',
+                textAlign: 'center',
+                borderRadius: 10,
+                marginLeft: 17,}}>
                 </TextInput>
-          <TouchableWithoutFeedback
-              onFocus={true}> 
+           <View style={{flexDirection: 'row'}}>
             <TextInput underlineColorAndroid = "transparent" 
             placeholder='Digite sua senha' 
-            secureTextEntry={true}
+            secureTextEntry={this.state.secure}
             style={styles.inputs}
             isFocused={true}
             ref={(c) => this._input = c}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
-         </TouchableWithoutFeedback>
+            <TouchableOpacity style={{marginTop: 12, marginLeft: -60, }}onPress={()=> this.hiddenicon(this.state.secure)}><Image source={this.state.img} style={{width: 50, height: 25}}></Image></TouchableOpacity>
+            </View>
           <View>
             <TouchableOpacity 
             onPress={()=> this.autenticação()} 
