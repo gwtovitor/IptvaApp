@@ -27,12 +27,14 @@ class Login extends Component{
         msg: '',
         token: '',
         secure: true,
+        isfocused: false,
         img: require('../src/show.png'),
        };
        this.navigation = this.props.navigation;
        this.autenticação = this.autenticação.bind(this)
        this.start = this.start.bind(this)
        this.hiddenicon = this.hiddenicon.bind(this)
+       this.onFocusChange = this.onFocusChange.bind(this)
  }
 
 
@@ -66,7 +68,10 @@ hiddenicon(state){
     this.setState({img: require('../src/hidden.png')})
   }
 }
-
+onFocusChange =()=>{
+  this.setState({isFocused: true});
+  console.log('estou focado porra')
+}
  async autenticação(){
 
   if(this.state.login == '' || this.state.senha == ''){
@@ -117,23 +122,14 @@ hiddenicon(state){
                 <TextInput underlineColorAndroid = "transparent"
                 placeholder='Digite o seu Login'
                 onChangeText={(user) => {this.setState({login: user.toLowerCase()}) }}
-                style={{    borderColor: 'black',
-                width: 300,
-                height: 40, 
-                margin: 5,
-                borderWidth: 2,
-                backgroundColor: '#fff',
-                textAlign: 'center',
-                borderRadius: 10,
-                marginLeft: 17,}}>
+                style={styles.inputlogin}>
                 </TextInput>
            <View style={{flexDirection: 'row'}}>
             <TextInput underlineColorAndroid = "transparent" 
             placeholder='Digite sua senha' 
             secureTextEntry={this.state.secure}
-            style={styles.inputs}
-            isFocused={true}
-            ref={(c) => this._input = c}
+            style={styles.inputsenha}
+            onFocus={this.onFocusChange}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
             <TouchableOpacity style={{marginTop: 12, marginLeft: -60, }}onPress={()=> this.hiddenicon(this.state.secure)}><Image source={this.state.img} style={{width: 50, height: 25}}></Image></TouchableOpacity>
             </View>
@@ -172,8 +168,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#000',
   },
-
-  inputs:{
+  inputlogin:{
+    borderColor: 'black',
+    width: 300,
+    height: 40, 
+    margin: 5,
+    borderWidth: 2,
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    borderRadius: 10,
+    marginLeft: 17,
+  },
+  inputsenha:{
     borderColor: 'black',
     width: 300,
     height: 40, 

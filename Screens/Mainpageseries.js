@@ -5,6 +5,9 @@ import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from '@rneui/themed';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import MyButton from '../src/services/focused';
+
 
 
 
@@ -30,9 +33,10 @@ class Mainpageseries extends Component{
         envioprops: '',
         cordefundodireito: '#000',
         cordefundoesquerdo: '#fff000',
+        buttonFocused: false,
+        
        };
        this.navigation = this.props.navigation;
-
        this.logo = this.logo.bind(this)
        this.envioserie = this.envioserie.bind(this)
   
@@ -101,6 +105,7 @@ logo(ulrlogo){
         return {uri: ulrlogo}
       }
   }
+
 async attcanal(index, navigation){
   const value = await AsyncStorage.getItem('token')
   const response = await api.get('/serie', {headers:{
@@ -131,6 +136,13 @@ async attcanal(index, navigation){
     this.setState({indice: index})
     this.setState({canalselect: response.data[index].series})
     
+}
+handleFocus = () => {
+  this.setState({ buttonFocused: true });
+}
+
+handleBlur = () => {
+  this.setState({ buttonFocused: false });
 }
 
 async envioserie(indice1, indice2){
@@ -163,7 +175,6 @@ async envioserie(indice1, indice2){
   this.setState({envioprops: response.data[indice1].series[indice2]})
   return this.navigation.navigate('Series', {paramKey: this.state.envioprops})
 }
-
   render(){
     return (
       
@@ -197,6 +208,7 @@ async envioserie(indice1, indice2){
           <View style={{alignItems: 'center'}}> 
           
           <TextInput style={styles.input} placeholderTextColor="#000" 
+            
             onChangeText={(text)=> this.setState({searchbar : text})}  placeholder="Pesquisa"></TextInput>
             <Text>{this.carregando()}</Text>
           </View>
@@ -207,7 +219,7 @@ async envioserie(indice1, indice2){
           numColumns={3}
           renderItem={({item, index})=> 
 
-            <TouchableOpacity
+            <TouchableWithoutFeedback
             
             style ={{width: 200,
               height: 300,
@@ -217,12 +229,19 @@ async envioserie(indice1, indice2){
               borderColor:'#fff',
               margin:3,}}
                onPress={()=> this.envioserie(this.state.indice, item.index)}>
-            <View style={styles.viewbotaodireito}>
-                <Text style={styles.texto}>{item.name}</Text>
-                <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
-             
-            </View>
-          </TouchableOpacity>}/>
+          <View style={styles.container} tvParallaxProperties={{ pressMagnification: 1.1 }}>
+ 
+        <Text style={styles.title}>Meu Componente</Text>
+        <MyButton
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onPress={this.handleButtonPress}
+          text="Clique aqui"
+          imageSource={this.logo(item.logo)}
+          hasTVPreferredFocus={this.state.buttonFocused}
+        />
+      </View>
+          </TouchableWithoutFeedback>}/>
         </View>
       </View>   
         
