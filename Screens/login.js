@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking, Image} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking, Image, ActivityIndicator} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import apipost from '../src/services/postapi';
 import { TextInput } from 'react-native-gesture-handler';
@@ -29,12 +29,13 @@ class Login extends Component{
         secure: true,
         isfocused: false,
         img: require('../src/show.png'),
+        loading: false,
        };
        this.navigation = this.props.navigation;
        this.autenticação = this.autenticação.bind(this)
        this.start = this.start.bind(this)
        this.hiddenicon = this.hiddenicon.bind(this)
-       this.onFocusChange = this.onFocusChange.bind(this)
+       this.carregando = this.carregando.bind(this)
  }
 
 
@@ -43,7 +44,7 @@ class Login extends Component{
       try{
         const value = await AsyncStorage.getItem('token')
         if(value !== null){
-          const login = await api.get('/serie', {headers:{
+          const login = await api.get('/channel', {headers:{
             'Authorization': `Bearer ${value}`
           }}).then((response)=>{
               if(response.data){
@@ -68,15 +69,27 @@ hiddenicon(state){
     this.setState({img: require('../src/hidden.png')})
   }
 }
-onFocusChange =()=>{
-  this.setState({isFocused: true});
-  console.log('estou focado porra')
+
+carregando(){
+  if(this.state.loading == false){
+    return (
+      'ENTRAR'
+    )
+  }else{
+    return (<View>
+      <ActivityIndicator color="#009688" 
+    size="large" 
+    ></ActivityIndicator>
+  </View>
+  )
+  }
 }
  async autenticação(){
 
   if(this.state.login == '' || this.state.senha == ''){
-      this.setState({msg: 'Digite um usuario e Senha'})
+      this.setState({msg: 'Digite um usuario e senha'})
     }else{
+    this.setState({loading: true})
     const login = await apipost.post('/login', { username: this.state.login,
                                   password: this.state.senha})
                                   .then((response)=>{
@@ -97,17 +110,7 @@ onFocusChange =()=>{
                                   })
         .catch(function (error) {
           if (error.response) {
-
-        console.log(error.response.data);
-        console.log('----------data up------------')
-
-        console.log(error.response.status);
-        console.log('-----------status up-----------')
-        console.log(error.response.headers);
-        console.log('----------headers up------------')
       } 
-      console.log(error.config);
-      console.log('--------------config up --------')
     });
     }}
 
@@ -137,7 +140,7 @@ onFocusChange =()=>{
             <TouchableOpacity 
             onPress={()=> this.autenticação()} 
             style={styles.botaoarea}>
-              <Text>ENTRAR</Text>
+              <Text>{this.carregando()}</Text>
             </TouchableOpacity>
             </View>
                 <Text style={{color: 'red', fontSize:12}}>{this.state.msg}</Text>

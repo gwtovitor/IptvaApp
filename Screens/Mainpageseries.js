@@ -219,29 +219,22 @@ async envioserie(indice1, indice2){
           numColumns={3}
           renderItem={({item, index})=> 
 
-            <TouchableWithoutFeedback
+          <TouchableOpacity
             
-            style ={{width: 200,
-              height: 300,
-              borderRadius: 10,
-              borderWidth: 3,
-              backgroundColor: this.state.botaolatdireito,
-              borderColor:'#fff',
-              margin:3,}}
-               onPress={()=> this.envioserie(this.state.indice, item.index)}>
-          <View style={styles.container} tvParallaxProperties={{ pressMagnification: 1.1 }}>
- 
-        <Text style={styles.title}>Meu Componente</Text>
-        <MyButton
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-          onPress={this.handleButtonPress}
-          text="Clique aqui"
-          imageSource={this.logo(item.logo)}
-          hasTVPreferredFocus={this.state.buttonFocused}
-        />
-      </View>
-          </TouchableWithoutFeedback>}/>
+          style ={{width: 200,
+            height: 300,
+            borderRadius: 10,
+            borderWidth: 3,
+            backgroundColor: 'this.state.botaolatdireito',
+            borderColor:'#fff',
+            margin:3,}}
+             onPress={()=> this.envioserie(this.state.indice, item.index)}>
+          <View style={styles.viewbotaodireito}>
+              <Text style={styles.texto}>{item.name}</Text>
+              <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
+           
+          </View>
+        </TouchableOpacity>}/>
         </View>
       </View>   
         
