@@ -5,8 +5,7 @@ import api from '../src/services/getapi';
 import { FlashList } from "@shopify/flash-list";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from '@rneui/themed';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import MyButton from '../src/services/focused';
+
 
 
 

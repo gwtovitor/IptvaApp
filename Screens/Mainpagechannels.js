@@ -187,7 +187,6 @@ async attcanal(index){
           marginLeft={-2}
           renderItem={({item})=> 
             <TouchableOpacity
-            
             style ={{width: 200,
               height: 150,
               borderRadius: 10,
@@ -195,7 +194,7 @@ async attcanal(index){
               backgroundColor: this.state.botaolatdireito,
               borderColor:'#fff',
               margin:3,}}
-               onPress={()=> this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
+            onPress={()=> this.navigation.navigate('Videoplayer', {paramKey: item.link})}>
                 <View style={styles.viewbotaodireito}>
                 <Text style={styles.texto}>{item.dataName}</Text>
                 <Image style={styles.imagem} source={this.logo(item.logo)}></Image>
