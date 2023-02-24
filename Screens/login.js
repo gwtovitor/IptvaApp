@@ -39,14 +39,10 @@ class Login extends Component{
        this.secondTextInput = React.createRef();
  }
 
- componentDidMount() {
-  this.firstTextInput.current.focus();
-}
-
 handleFirstTextInputEndEditing = () => {
   // Faça o que precisar com o texto inserido no primeiro TextInput
   // Mova o foco para o segundo TextInput
-  this.secondTextInput.current.focus();
+  ;
 }
 handleSecondTextInputEndEditing = () => {
   // Faça o que precisar com o texto inserido no segundo TextInput
@@ -89,7 +85,13 @@ carregando(){
     return (
       'ENTRAR'
     )
-  }else{
+  }
+  else if(this.state.msg){
+    return (
+      'ENTRAR'
+    )
+  }
+  else{
     return (<View>
       <ActivityIndicator color="#009688" 
     size="large" 
@@ -139,7 +141,7 @@ carregando(){
                 <TextInput 
                   ref={this.firstTextInput}
                   autoFocus={true}
-                  onEndEditing={this.handleFirstTextInputEndEditing}
+                  onEndEditing={()=> this.secondTextInput.current.focus()}
                   editable={true}
                 placeholder='Digite o seu Login'
                 onChangeText={(user) => {this.setState({login: user.toLowerCase()}) }}
