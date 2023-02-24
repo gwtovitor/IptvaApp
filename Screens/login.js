@@ -1,8 +1,7 @@
 import React, { Component} from 'react';
-import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking, Image, ActivityIndicator} from 'react-native';
+import {TouchableWithoutFeedback, View, Text, StyleSheet, StatusBar, TouchableOpacity, Linking, Image, ActivityIndicator, TextInput} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import apipost from '../src/services/postapi';
-import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../src/services/getapi';
 
@@ -36,7 +35,22 @@ class Login extends Component{
        this.start = this.start.bind(this)
        this.hiddenicon = this.hiddenicon.bind(this)
        this.carregando = this.carregando.bind(this)
+       this.firstTextInput = React.createRef();
+       this.secondTextInput = React.createRef();
  }
+
+ componentDidMount() {
+  this.firstTextInput.current.focus();
+}
+
+handleFirstTextInputEndEditing = () => {
+  // Faça o que precisar com o texto inserido no primeiro TextInput
+  // Mova o foco para o segundo TextInput
+  this.secondTextInput.current.focus();
+}
+handleSecondTextInputEndEditing = () => {
+  // Faça o que precisar com o texto inserido no segundo TextInput
+}
 
 
  async start(){
@@ -116,23 +130,29 @@ carregando(){
 
   render(){
     this.start()
+    const text = ''
     return(
       
         <View style={styles.container}> 
             <StatusBar hidden={true}/>
             <Text style={styles.textologin}> TELEVIDO </Text>
-      
-                <TextInput underlineColorAndroid = "transparent"
+                <TextInput 
+                  ref={this.firstTextInput}
+                  autoFocus={true}
+                  onEndEditing={this.handleFirstTextInputEndEditing}
+                  editable={true}
                 placeholder='Digite o seu Login'
                 onChangeText={(user) => {this.setState({login: user.toLowerCase()}) }}
                 style={styles.inputlogin}>
                 </TextInput>
+
            <View style={{flexDirection: 'row'}}>
             <TextInput underlineColorAndroid = "transparent" 
             placeholder='Digite sua senha' 
+            ref={this.secondTextInput}
+            onEndEditing={this.autenticação}
             secureTextEntry={this.state.secure}
             style={styles.inputsenha}
-            onFocus={this.onFocusChange}
             onChangeText={(senha) => this.setState({senha: senha}) }></TextInput>
             <TouchableOpacity style={{marginTop: 12, marginLeft: -60, }}onPress={()=> this.hiddenicon(this.state.secure)}><Image source={this.state.img} style={{width: 50, height: 25}}></Image></TouchableOpacity>
             </View>
