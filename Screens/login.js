@@ -111,6 +111,9 @@ carregando(){
                                   .then((response)=>{
                                     if(response.data.message == 'Username or Password invalid.'){
                                         this.setState({msg: 'Usuario ou Senha Invalida!'})
+                                        this.firstTextInput.current.focus()
+                                        this.firstTextInput.current.clear()
+                                        this.secondTextInput.current.clear()
                                       }else{
                                           this.setState({token: response.data.token})
                                           

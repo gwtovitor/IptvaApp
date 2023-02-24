@@ -31,6 +31,7 @@ class Mainpagemovie extends Component{
        this.carregando = this.carregando.bind(this)
        this.organizando = this.organizando.bind(this)
        this.logo = this.logo.bind(this)
+       this.barrapesquisa = React.createRef();
   
   }
  
@@ -108,6 +109,8 @@ logo(ulrlogo){
       }
   }
 async attcanal(index){
+  this.barrapesquisa.current.clear()
+  this.setState({searchbar: ''})
   const value = await AsyncStorage.getItem('token')
   const response = await api.get('/movie', {headers:{
    'Authorization': `Bearer ${value}`
@@ -169,7 +172,10 @@ async attcanal(index){
         <View style={styles.rigthview}>
           <View style={{alignItems: 'center'}}> 
           
-          <TextInput style={styles.input} placeholderTextColor="#000" 
+          <TextInput 
+            style={styles.input}
+            ref={this.barrapesquisa}
+            placeholderTextColor="#000" 
             onChangeText={(text)=> this.setState({searchbar : text})}  placeholder="Pesquisa"></TextInput>
             <Text>{this.carregando()}</Text>
           </View>
